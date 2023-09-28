@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  servlet:
+    #    context-path: /api/ws
+    session:
+      timeout: 604800s
+      cookie:
+        max-age: 604800s
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+dev-auth: true
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/test
+    username: postgres
+    password: 1234
+  liquibase:
+    change-log: classpath:liquibase/db.changelog-master.xml
+
+    drop-first: false
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+    jpa:
+      show-sql: true
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
