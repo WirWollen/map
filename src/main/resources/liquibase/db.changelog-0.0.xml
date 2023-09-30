@@ -2,6 +2,79 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet id="01.10.2023" author="wir_wollen">
 
+
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="country">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_country"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="state">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_state"/>
+            </column>
+            <column name="country_entity_id" type="BIGINT"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="country_entity_id" baseTableName="state" constraintName="FK_STATE_ON_COUNTRY_ENTITY" referencedColumnNames="id" referencedTableName="country"/>
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="locality">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_locality"/>
+            </column>
+            <column name="state_entity_id" type="BIGINT"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="state_entity_id" baseTableName="locality" constraintName="FK_LOCALITY_ON_STATE_ENTITY" referencedColumnNames="id" referencedTableName="state"/>
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="day">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_day"/>
+            </column>
+            <column name="start" type="TIME"/>
+            <column name="finish" type="TIME"/>
+        </createTable>
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="work_days">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_work_days"/>
+            </column>
+            <column name="day1_entity_id" type="BIGINT"/>
+            <column name="day2_entity_id" type="BIGINT"/>
+            <column name="day3_entity_id" type="BIGINT"/>
+            <column name="day4_entity_id" type="BIGINT"/>
+            <column name="day5_entity_id" type="BIGINT"/>
+            <column name="day6_entity_id" type="BIGINT"/>
+            <column name="day7_entity_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="day1_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY1_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
+        <addForeignKeyConstraint baseColumnNames="day2_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY2_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
+        <addForeignKeyConstraint baseColumnNames="day3_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY3_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
+        <addForeignKeyConstraint baseColumnNames="day4_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY4_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
+        <addForeignKeyConstraint baseColumnNames="day5_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY5_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
+        <addForeignKeyConstraint baseColumnNames="day6_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY6_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
+        <addForeignKeyConstraint baseColumnNames="day7_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY7_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="department">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_department"/>
+            </column>
+            <column name="locality_entity_id" type="BIGINT"/>
+            <column name="work_days_entity_id" type="BIGINT"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="coord" type="VARCHAR(255)"/>
+            <column name="postcode" type="VARCHAR(20)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(100)"/>
+            <column name="workload" type="INT"/>
+            <column name="atms_count" type="INT"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="locality_entity_id" baseTableName="department" constraintName="FK_DEPARTMENT_ON_LOCALITY_ENTITY" referencedColumnNames="id" referencedTableName="locality"/>
+        <addForeignKeyConstraint baseColumnNames="work_days_entity_id" baseTableName="department" constraintName="FK_DEPARTMENT_ON_WORK_DAYS_ENTITY" referencedColumnNames="id" referencedTableName="work_days"/>
+    </changeSet>
 
 </databaseChangeLog>
