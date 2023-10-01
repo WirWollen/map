@@ -1,10 +1,7 @@
 package vtb.map.map.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vtb.map.map.dtos.CountryDto;
 import vtb.map.map.entities.CountryEntity;
 import vtb.map.map.services.AdminService;
@@ -22,8 +19,8 @@ public class AdminController {
         return adminService.showAllCountries();
     }
 
-    @PostMapping("/saveCountry")
-    public CountryEntity saveCountry(CountryDto dto) {
-        return adminService.addCountry(dto);
+    @PostMapping("/saveAll")
+    public boolean saveCountryAll(@RequestBody List<CountryDto> dto) {
+        return adminService.addCountryList(dto);
     }
 }

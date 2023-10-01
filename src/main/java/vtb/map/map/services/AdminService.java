@@ -19,7 +19,9 @@ public class AdminService {
         return countryRepo.findAll().stream().map(CountryConverter::toDto).collect(Collectors.toList());
     }
 
-    public CountryEntity addCountry(CountryDto dto) {
-        return countryRepo.save(CountryConverter.toEntity(dto));
+    public boolean addCountryList(List<CountryDto> dtoList) {
+        countryRepo.saveAll(dtoList.stream().map(CountryConverter::toEntity).collect(Collectors.toList()));
+        return true;
     }
+
 }
