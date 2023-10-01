@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vtb.map.map.converters.CountryConverter;
+import vtb.map.map.converters.StateConverter;
 import vtb.map.map.dtos.CountryDto;
+import vtb.map.map.dtos.StateDto;
 import vtb.map.map.entities.CountryEntity;
 import vtb.map.map.repo.CountryRepo;
+import vtb.map.map.repo.StateRepo;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +18,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminService {
     private final CountryRepo countryRepo;
+    private final StateRepo stateRepo;
+
+    //Country
 
     public List<CountryDto> showAllCountries() {
         return countryRepo.findAll().stream().map(CountryConverter::toDto).collect(Collectors.toList());
@@ -30,7 +36,7 @@ public class AdminService {
     }
 
     @Transactional
-    public boolean changeCountry(CountryDto dto) {
+    public boolean updateCountry(CountryDto dto) {
         if (countryRepo.existsById(dto.getId())) {
             countryRepo.save(CountryConverter.toEntity(dto));
             return true;
@@ -40,6 +46,17 @@ public class AdminService {
 
     public boolean deleteCountryById(long id) {
         countryRepo.deleteById(id);
+        return true;
+    }
+
+    //State
+
+    public List<StateDto> showAllStates() {
+        return stateRepo.findAll().stream().map(StateConverter::toDto).collect(Collectors.toList());
+    }
+
+    public boolean addStateList(List<StateDto> dtoList) {
+        stateRepo.saveAll(dtoList.stream().map(StateConverter::toEntity).collect(Collectors.toList()));
         return true;
     }
 }
