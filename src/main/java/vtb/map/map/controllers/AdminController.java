@@ -20,7 +20,7 @@ public class AdminController {
     }
 
     @PostMapping("/getCountryById")
-    public CountryDto showCountryDto(long id) {
+    public CountryDto showCountryDto(@RequestParam long id) {
         return adminService.showCountryDto(id);
     }
 
@@ -35,7 +35,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/deleteById")
-    public boolean deleteCountryById(long id) {
+    public boolean deleteCountryById(@RequestParam long id) {
         return adminService.deleteCountryById(id);
     }
 }
