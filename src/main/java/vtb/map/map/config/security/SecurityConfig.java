@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests(
                         authz -> authz
-                                .antMatchers("/api/auth/login", "/api/auth/token").permitAll()
+                                .antMatchers("/api/auth/login", "/api/auth/token", "/admin/**").permitAll()
                                 .antMatchers("/swagger-ui/**", "/v3/**").permitAll() //swagger
                                 .anyRequest().authenticated()
                                 .and()
