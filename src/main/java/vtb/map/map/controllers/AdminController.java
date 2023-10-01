@@ -1,10 +1,7 @@
 package vtb.map.map.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vtb.map.map.dtos.CountryDto;
 import vtb.map.map.entities.CountryEntity;
 import vtb.map.map.services.AdminService;
@@ -21,9 +18,21 @@ public class AdminController {
     public List<CountryDto> getCountries() {
         return adminService.showAllCountries();
     }
+    @PostMapping("/getCountryById")
+    public CountryDto showCountryDto(long id){
+        return adminService.showCountryDto(id);
+    }
+    @PostMapping("/saveAll")
+    public boolean saveCountryAll(@RequestBody List<CountryDto> dto) {
+        return adminService.addCountryList(dto);
+    }
 
-    @PostMapping("/saveCountry")
-    public CountryEntity saveCountry(CountryDto dto) {
-        return adminService.addCountry(dto);
+    @PutMapping("/change")
+    public boolean changeCountry(@RequestBody CountryDto dto) {
+        return adminService.changeCountry(dto);
+    }
+    @DeleteMapping("/deleteById")
+    public boolean deleteCountryById(long id){
+        return adminService.deleteCountryById(id);
     }
 }
