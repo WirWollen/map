@@ -19,13 +19,16 @@ public class AdminService {
     public List<CountryDto> showAllCountries() {
         return countryRepo.findAll().stream().map(CountryConverter::toDto).collect(Collectors.toList());
     }
-    public CountryDto showCountryDto(long id){
+
+    public CountryDto showCountryDto(long id) {
         return CountryConverter.toDto(countryRepo.findById(id).get());
     }
+
     public boolean addCountryList(List<CountryDto> dtoList) {
         countryRepo.saveAll(dtoList.stream().map(CountryConverter::toEntity).collect(Collectors.toList()));
         return true;
     }
+
     @Transactional
     public boolean changeCountry(CountryDto dto) {
         if (countryRepo.existsById(dto.getId())) {
@@ -34,6 +37,7 @@ public class AdminService {
         }
         return false;
     }
+
     public boolean deleteCountryById(long id) {
         countryRepo.deleteById(id);
         return true;

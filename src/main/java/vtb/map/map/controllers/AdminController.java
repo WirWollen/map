@@ -18,10 +18,12 @@ public class AdminController {
     public List<CountryDto> getCountries() {
         return adminService.showAllCountries();
     }
+
     @PostMapping("/getCountryById")
-    public CountryDto showCountryDto(long id){
+    public CountryDto showCountryDto(long id) {
         return adminService.showCountryDto(id);
     }
+
     @PostMapping("/saveAll")
     public boolean saveCountryAll(@RequestBody List<CountryDto> dto) {
         return adminService.addCountryList(dto);
@@ -31,8 +33,9 @@ public class AdminController {
     public boolean changeCountry(@RequestBody CountryDto dto) {
         return adminService.changeCountry(dto);
     }
+
     @DeleteMapping("/deleteById")
-    public boolean deleteCountryById(long id){
+    public boolean deleteCountryById(long id) {
         return adminService.deleteCountryById(id);
     }
 }
