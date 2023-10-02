@@ -1,4 +1,4 @@
-package vtb.map.map.dtos;
+package vtb.map.map.dtos.gpt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnswerDto {
-    private String chat_id;
-    private String bot_response;
-    private Long timestamp;
+public class CreateChatResponseDto {
+    private String id_;
 }

@@ -1,4 +1,4 @@
-package vtb.map.map.dtos;
+package vtb.map.map.dtos.gpt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
