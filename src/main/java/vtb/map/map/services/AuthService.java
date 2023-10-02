@@ -18,7 +18,6 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-
     private final UserService userService;
     private final Map<String, String> refreshStorage = new HashMap<>();
     private final JwtProvider jwtProvider;

@@ -12,7 +12,7 @@ import vtb.map.map.config.security.RefreshJwtRequest;
 import vtb.map.map.services.AuthService;
 
 @RestController
-@RequestMapping("api/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 

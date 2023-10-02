@@ -10,6 +10,7 @@ import vtb.map.map.repo.LocalityRepo;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class LocalityService {
@@ -18,9 +19,11 @@ public class LocalityService {
     public List<LocalityDto> showAllLocalities() {
         return localityRepo.findAll().stream().map(LocalityConverter::toDto).collect(Collectors.toList());
     }
+
     public LocalityDto showLocalityDto(long id) {
         return LocalityConverter.toDto(localityRepo.findById(id).get());
     }
+
     public boolean addLocalityList(List<LocalityDto> dtoList) {
         localityRepo.saveAll(dtoList.stream().map(LocalityConverter::toEntity).collect(Collectors.toList()));
         return true;
