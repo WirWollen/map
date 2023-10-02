@@ -9,7 +9,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/admin/locality")
+@RequestMapping("/locality")
 public class LocalityController {
     private final LocalityService localityService;
     @GetMapping("/getLocalities")

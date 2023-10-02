@@ -18,9 +18,11 @@ public class StateService {
     public List<StateDto> showAllStates() {
         return stateRepo.findAll().stream().map(StateConverter::toDto).collect(Collectors.toList());
     }
+
     public StateDto showStateDto(long id) {
         return StateConverter.toDto(stateRepo.findById(id).get());
     }
+
     public boolean addStateList(List<StateDto> dtoList) {
         stateRepo.saveAll(dtoList.stream().map(StateConverter::toEntity).collect(Collectors.toList()));
         return true;

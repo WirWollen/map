@@ -18,6 +18,7 @@ public class CountryService {
     public List<CountryDto> showAllCountries() {
         return countryRepo.findAll().stream().map(CountryConverter::toDto).collect(Collectors.toList());
     }
+
     public CountryDto showCountryDto(long id) {
         return CountryConverter.toDto(countryRepo.findById(id).get());
     }

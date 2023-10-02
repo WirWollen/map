@@ -13,7 +13,6 @@ import vtb.map.map.services.AuthService;
 @RequestMapping("api")
 @RequiredArgsConstructor
 public class Controller {
-
     private final AuthService authService;
 
     @PreAuthorize("hasAuthority('USER')")

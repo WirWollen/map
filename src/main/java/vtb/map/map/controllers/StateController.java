@@ -9,7 +9,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/admin/state")
+@RequestMapping("/state")
 public class StateController {
     private final StateService stateService;
     @GetMapping("/getStates")
