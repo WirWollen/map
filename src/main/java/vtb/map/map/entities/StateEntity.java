@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import vtb.map.map.dtos.LocalityDto;
 import vtb.map.map.entities.base.BaseEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "state")
 @Entity
@@ -20,4 +22,6 @@ public class StateEntity extends BaseEntity {
     private CountryEntity countryEntity;
     @Column(name = "name")
     private String name;
+    @OneToMany(mappedBy = "locality")
+    private List<LocalityEntity> localityEntityList;
 }

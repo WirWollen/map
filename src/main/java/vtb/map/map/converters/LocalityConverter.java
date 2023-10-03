@@ -9,14 +9,12 @@ public class LocalityConverter {
     public static LocalityDto toDto(LocalityEntity entity){
         LocalityDto dto = new LocalityDto();
         BeanUtils.copyProperties(entity, dto);
-        dto.setStateDto(StateConverter.toDto(entity.getStateEntity()));
         return dto;
     }
 
     public static LocalityEntity toEntity(LocalityDto dto){
         LocalityEntity entity = new LocalityEntity();
         BeanUtils.copyProperties(dto, entity);
-        entity.setStateEntity(StateConverter.toEntity(dto.getStateDto()));
         return entity;
     }
 }

@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocalityDto {
     private Long id;
-    private StateDto stateDto;
+    private List<DepartmentDto> departmentDtoList;
     private String name;
 }
