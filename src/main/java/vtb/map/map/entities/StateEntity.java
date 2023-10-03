@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vtb.map.map.dtos.LocalityDto;
 import vtb.map.map.entities.base.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Table(name = "state")
@@ -17,11 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StateEntity extends BaseEntity {
-    @ManyToOne
-    @JoinColumn(name = "country_entity_id")
-    private CountryEntity countryEntity;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "locality")
+    @OneToMany
     private List<LocalityEntity> localityEntityList;
 }
