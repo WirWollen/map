@@ -17,7 +17,6 @@ public class DepartmentDto {
     private String postcode;
     private String description;
     private String phone;
-    private Long workload;
     private Long ATMs_count;
     private boolean is_ATM;
 }

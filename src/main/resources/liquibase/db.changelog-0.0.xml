@@ -70,7 +70,6 @@
             <column name="postcode" type="VARCHAR(20)"/>
             <column name="description" type="VARCHAR(255)"/>
             <column name="phone" type="VARCHAR(100)"/>
-            <column name="workload" type="INT"/>
             <column name="atms_count" type="INT"/>
             <column name="is_atm" type="boolean"/>
         </createTable>

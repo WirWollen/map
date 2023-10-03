@@ -28,8 +28,6 @@ public class DepartmentEntity extends BaseEntity {
     private String description;
     @Column(name = "phone")
     private String phone;
-    @Column(name = "workload")
-    private Integer workload;
     @Column(name = "ATMs_count")
     private Integer ATMs_count;
     @Column(name = "isATM")
