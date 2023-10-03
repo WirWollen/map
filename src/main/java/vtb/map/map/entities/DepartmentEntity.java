@@ -35,4 +35,6 @@ public class DepartmentEntity extends BaseEntity {
     private Integer workload;
     @Column(name = "ATMs_count")
     private Integer ATMs_count;
+    @Column(name = "isATM")
+    private boolean is_ATM;
 }

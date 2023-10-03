@@ -72,6 +72,7 @@
             <column name="phone" type="VARCHAR(100)"/>
             <column name="workload" type="INT"/>
             <column name="atms_count" type="INT"/>
+            <column name="is_atm" type="boolean"/>
         </createTable>
         <addForeignKeyConstraint baseColumnNames="locality_entity_id" baseTableName="department" constraintName="FK_DEPARTMENT_ON_LOCALITY_ENTITY" referencedColumnNames="id" referencedTableName="locality"/>
         <addForeignKeyConstraint baseColumnNames="work_days_entity_id" baseTableName="department" constraintName="FK_DEPARTMENT_ON_WORK_DAYS_ENTITY" referencedColumnNames="id" referencedTableName="work_days"/>
