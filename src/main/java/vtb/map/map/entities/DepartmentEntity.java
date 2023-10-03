@@ -15,10 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepartmentEntity extends BaseEntity {
-    @ManyToOne
-    @JoinColumn(name = "locality_entity_id")
-    private LocalityEntity localityEntity;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "work_days_entity_id")
     private WorkDaysEntity workDaysEntity;
     @Column(name = "address")
