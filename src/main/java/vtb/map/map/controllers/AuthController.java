@@ -2,10 +2,7 @@ package vtb.map.map.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vtb.map.map.config.security.JwtRequest;
 import vtb.map.map.config.security.JwtResponse;
 import vtb.map.map.config.security.RefreshJwtRequest;
@@ -14,6 +11,7 @@ import vtb.map.map.services.AuthService;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
 
     private final AuthService authService;

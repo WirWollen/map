@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/locality")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LocalityController {
     private final LocalityService localityService;
     @GetMapping("/getLocalities")
