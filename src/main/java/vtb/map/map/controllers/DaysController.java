@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/days")
+@CrossOrigin(origins = "http://localhost:3000")
 public class DaysController {
     private final DaysService daysService;
     @GetMapping("/getDays")

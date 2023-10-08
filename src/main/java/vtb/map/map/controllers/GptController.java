@@ -7,6 +7,7 @@ import vtb.map.map.services.GptService;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/gpt")
+@CrossOrigin(origins = "http://localhost:3000")
 public class GptController {
     private final GptService gptService;
 

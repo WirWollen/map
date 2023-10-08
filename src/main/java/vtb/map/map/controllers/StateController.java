@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/state")
+@CrossOrigin(origins = "http://localhost:3000")
 public class StateController {
     private final StateService stateService;
     @GetMapping("/getStates")
