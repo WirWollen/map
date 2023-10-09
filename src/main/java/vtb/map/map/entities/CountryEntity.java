@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import vtb.map.map.entities.base.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Table(name = "country")
@@ -22,6 +19,7 @@ public class CountryEntity extends BaseEntity {
     @Column(name = "name")
     private String name;
     @OneToMany
+    @JoinColumn(name = "country_entity_id")
     private List<StateEntity> stateEntityList;
 
 }
