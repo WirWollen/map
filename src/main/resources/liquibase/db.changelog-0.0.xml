@@ -84,6 +84,7 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_role"/>
             </column>
             <column name="role" type="VARCHAR(20)"/>
+        </createTable>
     </changeSet>
       
     <changeSet id="09.10.2023" author="Marquis">
