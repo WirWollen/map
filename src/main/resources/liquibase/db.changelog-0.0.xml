@@ -77,4 +77,14 @@
         <addForeignKeyConstraint baseColumnNames="work_days_entity_id" baseTableName="department" constraintName="FK_DEPARTMENT_ON_WORK_DAYS_ENTITY" referencedColumnNames="id" referencedTableName="work_days"/>
     </changeSet>
 
+    <changeSet id="01.10.2023_2" author="wir_wollen">
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="role">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_role"/>
+            </column>
+            <column name="role" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>

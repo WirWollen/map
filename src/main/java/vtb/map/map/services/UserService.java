@@ -3,30 +3,23 @@ package vtb.map.map.services;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import vtb.map.map.converters.UserConverter;
 import vtb.map.map.dtos.UserDto;
-import vtb.map.map.enums.Role;
+import vtb.map.map.repo.UserRepo;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
-
-    private final List<UserDto> userDtos;
-
-    public UserService() {
-        this.userDtos = List.of(
-                new UserDto("anton", "1234", "Антон", "Иванов", Collections.singleton(Role.USER)),
-                new UserDto("ivan", "12345", "Сергей", "Петров", Collections.singleton(Role.ADMIN))
-        );
-    }
+    private final UserRepo userRepo;
 
     public Optional<UserDto> getByLogin(@NonNull String login) {
-        return userDtos.stream()
-                .filter(userDto -> login.equals(userDto.getLogin()))
-                .findFirst();
+        return Optional.of(UserConverter.toDto(userRepo.findByLogin(login)));
+    }
+
+    public boolean registerUser(@NonNull UserDto dto) {
+        return true;
     }
 
 }
