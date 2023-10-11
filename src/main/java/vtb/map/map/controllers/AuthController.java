@@ -13,25 +13,26 @@ import vtb.map.map.services.AuthService;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
-
     private final AuthService authService;
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest authRequest) {
-        final JwtResponse token = authService.login(authRequest);
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(authService.login(authRequest));
     }
 
-    @PostMapping("token")
+    @PostMapping("/token")
     public ResponseEntity<JwtResponse> getNewAccessToken(@RequestBody RefreshJwtRequest request) {
-        final JwtResponse token = authService.getAccessToken(request.getRefreshToken());
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(authService.getAccessToken(request.getRefreshToken()));
     }
 
-    @PostMapping("refresh")
+    @PostMapping("/refresh")
     public ResponseEntity<JwtResponse> getNewRefreshToken(@RequestBody RefreshJwtRequest request) {
-        final JwtResponse token = authService.refresh(request.getRefreshToken());
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(authService.refresh(request.getRefreshToken()));
     }
+
+//    @PostMapping("/register")
+//    public boolean getNewRefreshToken(@RequestBody RefreshJwtRequest request) {
+//        return ResponseEntity.ok(authService.refresh(request.getRefreshToken()));
+//    }
 
 }

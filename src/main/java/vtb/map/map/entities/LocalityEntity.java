@@ -21,4 +21,6 @@ public class LocalityEntity extends BaseEntity {
     @OneToMany
     @JoinColumn(name = "locality_entity_id")
     private List<DepartmentEntity> departmentEntityList;
+    @Column(name = "state_entity_id")
+    private Long stateId;
 }

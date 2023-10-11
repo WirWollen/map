@@ -32,4 +32,6 @@ public class DepartmentEntity extends BaseEntity {
     private Integer ATMs_count;
     @Column(name = "is_atm")
     private boolean is_ATM;
+    @Column(name = "locality_entity_id")
+    private boolean localityId;
 }
