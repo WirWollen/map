@@ -6,6 +6,7 @@ import vtb.map.map.dtos.StateDto;
 import vtb.map.map.services.StateService;
 
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -35,5 +36,10 @@ public class StateController {
     @DeleteMapping("/deleteStateById")
     public boolean deleteStateById(@RequestParam long id) {
         return stateService.deleteStateById(id);
+    }
+
+    @GetMapping("/findAllNamesOnly")
+    public Map<Long, String> findAllStateNamesOnly() {
+        return stateService.findAllStateNamesOnly();
     }
 }
