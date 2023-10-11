@@ -5,15 +5,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vtb.map.map.converters.DepartmentConverter;
 import vtb.map.map.dtos.DepartmentDto;
+import vtb.map.map.entities.DepartmentEntity;
+import vtb.map.map.entities.LocalityEntity;
 import vtb.map.map.repo.DepartmentRepo;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class DepartmentService {
     private final DepartmentRepo departmentRepo;
+    private final Random random = new Random();
 
     public List<DepartmentDto> showAllDepartments() {
         return departmentRepo.findAll().stream().map(DepartmentConverter::toDto).collect(Collectors.toList());
@@ -40,5 +43,9 @@ public class DepartmentService {
     public boolean deleteDepartmentById(long id) {
         departmentRepo.deleteById(id);
         return true;
+    }
+
+    public Map<Long, Integer> getWorkload(Long localityId) {
+        return departmentRepo.getWorkload(localityId).stream().collect(Collectors.toMap(DepartmentEntity::getId, el -> random.nextInt(101)));
     }
 }
