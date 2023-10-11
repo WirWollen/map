@@ -6,11 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 import vtb.map.map.converters.CountryConverter;
 import vtb.map.map.dtos.CountryDto;
 import vtb.map.map.entities.CountryEntity;
+import vtb.map.map.enums.SearchFilter;
 import vtb.map.map.repo.CountryRepo;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,5 +49,23 @@ public class CountryService {
 
     public Map<Long, String> findAllCountryNamesOnly() {
         return countryRepo.findAllCountryNamesOnly().stream().collect(Collectors.toMap(CountryEntity::getId, CountryEntity::getName, (a, b) -> b, HashMap::new));
+    }
+
+    public Set<Long> findByName(SearchFilter searchFilter, String name) {
+        switch (searchFilter) {
+            case EQUAL -> {
+                return countryRepo.findEqual(name).stream().map(el -> el.getId()).collect(Collectors.toSet());
+            }
+            case NOT_EQUAL -> {
+                return countryRepo.findNotEqual(name).stream().map(el -> el.getId()).collect(Collectors.toSet());
+            }
+            case CONTAINS -> {
+                return countryRepo.findContains(name).stream().map(el -> el.getId()).collect(Collectors.toSet());
+            }
+            case NOT_CONTAINS -> {
+                return countryRepo.findNotContains(name).stream().map(el -> el.getId()).collect(Collectors.toSet());
+            }
+            default -> throw new RuntimeException();
+        }
     }
 }

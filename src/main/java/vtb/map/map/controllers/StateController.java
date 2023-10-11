@@ -3,10 +3,12 @@ package vtb.map.map.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import vtb.map.map.dtos.StateDto;
+import vtb.map.map.enums.SearchFilter;
 import vtb.map.map.services.StateService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @AllArgsConstructor
 @RestController
@@ -41,5 +43,10 @@ public class StateController {
     @GetMapping("/findAllNamesOnly")
     public Map<Long, String> findAllStateNamesOnly() {
         return stateService.findAllStateNamesOnly();
+    }
+
+    @GetMapping("/findByName")
+    public Set<Long> findStateByName(SearchFilter filter, String name) {
+        return stateService.findByName(filter, name);
     }
 }
