@@ -19,4 +19,5 @@ public class DepartmentDto {
     private String phone;
     private Long ATMs_count;
     private boolean is_ATM;
+    private Long localityId;
 }

@@ -14,4 +14,5 @@ public class StateDto {
     private Long id;
     private List<LocalityDto> localityDtoList;
     private String name;
+    private Long countryId;
 }
