@@ -5,10 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vtb.map.map.converters.LocalityConverter;
 import vtb.map.map.dtos.LocalityDto;
-import vtb.map.map.dtos.StateDto;
+import vtb.map.map.entities.LocalityEntity;
 import vtb.map.map.repo.LocalityRepo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,5 +43,9 @@ public class LocalityService {
     public boolean deleteLocalityById(long id) {
         localityRepo.deleteById(id);
         return true;
+    }
+
+    public Map<Long, String> findAllLocalityNamesOnly() {
+        return localityRepo.findAllLocalityNamesOnly().stream().collect(Collectors.toMap(LocalityEntity::getId, LocalityEntity::getName, (a, b) -> b, HashMap::new));
     }
 }

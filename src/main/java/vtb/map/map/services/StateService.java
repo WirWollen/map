@@ -5,9 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vtb.map.map.converters.StateConverter;
 import vtb.map.map.dtos.StateDto;
+import vtb.map.map.entities.CountryEntity;
+import vtb.map.map.entities.StateEntity;
 import vtb.map.map.repo.StateRepo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,5 +44,9 @@ public class StateService {
     public boolean deleteStateById(long id) {
         stateRepo.deleteById(id);
         return true;
+    }
+
+    public Map<Long, String> findAllStateNamesOnly() {
+        return stateRepo.findAllStateNamesOnly().stream().collect(Collectors.toMap(StateEntity::getId, StateEntity::getName, (a, b) -> b, HashMap::new));
     }
 }

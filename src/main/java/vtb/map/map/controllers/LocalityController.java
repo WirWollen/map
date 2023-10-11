@@ -6,6 +6,7 @@ import vtb.map.map.dtos.LocalityDto;
 import vtb.map.map.services.LocalityService;
 
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -33,5 +34,10 @@ public class LocalityController {
     @DeleteMapping("/deleteLocalityById")
     public boolean deleteLocalityById(@RequestParam long id) {
         return localityService.deleteLocalityById(id);
+    }
+
+    @GetMapping("/findAllNamesOnly")
+    public Map<Long, String> findAllLocalityNamesOnly() {
+        return localityService.findAllLocalityNamesOnly();
     }
 }

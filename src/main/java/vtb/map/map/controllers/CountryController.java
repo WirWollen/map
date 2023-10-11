@@ -3,9 +3,12 @@ package vtb.map.map.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import vtb.map.map.dtos.CountryDto;
+import vtb.map.map.entities.CountryEntity;
 import vtb.map.map.services.CountryService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @AllArgsConstructor
 @RestController
@@ -37,5 +40,10 @@ public class CountryController {
     @DeleteMapping("/deleteCountryById")
     public boolean deleteCountryById(@RequestParam long id) {
         return countryService.deleteCountryById(id);
+    }
+
+    @GetMapping("/findAllNamesOnly")
+    public Map<Long, String> findAllCountryNamesOnly() {
+        return countryService.findAllCountryNamesOnly();
     }
 }
