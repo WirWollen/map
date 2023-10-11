@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import vtb.map.map.dtos.CountryDto;
 import vtb.map.map.entities.CountryEntity;
+import vtb.map.map.enums.SearchFilter;
 import vtb.map.map.services.CountryService;
 
 import java.util.List;
@@ -45,5 +46,10 @@ public class CountryController {
     @GetMapping("/findAllNamesOnly")
     public Map<Long, String> findAllCountryNamesOnly() {
         return countryService.findAllCountryNamesOnly();
+    }
+
+    @GetMapping("/findByName")
+    public Set<Long> findCountryByName(SearchFilter filter, String name) {
+        return countryService.findByName(filter, name);
     }
 }

@@ -3,10 +3,12 @@ package vtb.map.map.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import vtb.map.map.dtos.LocalityDto;
+import vtb.map.map.enums.SearchFilter;
 import vtb.map.map.services.LocalityService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @AllArgsConstructor
 @RestController
@@ -39,5 +41,10 @@ public class LocalityController {
     @GetMapping("/findAllNamesOnly")
     public Map<Long, String> findAllLocalityNamesOnly() {
         return localityService.findAllLocalityNamesOnly();
+    }
+
+    @GetMapping("/findByName")
+    public Set<Long> findLocalityByName(SearchFilter filter, String name) {
+        return localityService.findByName(filter, name);
     }
 }
