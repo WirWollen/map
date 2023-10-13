@@ -16,22 +16,34 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class DepartmentEntity extends BaseEntity {
     @OneToOne
-    @JoinColumn(name = "work_days_entity_id")
-    private WorkDaysEntity workDaysEntity;
+    @JoinColumn(name = "work_days_entity_fiz_id")
+    private WorkDaysEntity workDaysFizEntity;
+    @JoinColumn(name = "work_days_entity_ur_id")
+    private WorkDaysEntity workDaysUrEntity;
+    @Column(name = "locality_entity_id")
+    private Long localityId;
     @Column(name = "address")
     private String address;
-    @Column(name = "coord")
-    private String coord;
+    @Column(name = "coord_x")
+    private String coord_x;
+    @Column(name = "coord_y")
+    private String coord_y;
     @Column(name = "postcode")
     private String postcode;
     @Column(name = "description")
     private String description;
     @Column(name = "phone")
     private String phone;
-    @Column(name = "atms_count")
-    private Integer ATMs_count;
-    @Column(name = "is_atm")
-    private boolean is_ATM;
-    @Column(name = "locality_entity_id")
-    private boolean localityId;
+    @Column(name = "office_type")
+    private String office_type;
+    @Column(name = "sale_point_format")
+    private String sale_point_format;
+    @Column(name = "suo_availability")
+    private String suo_availability;
+    @Column(name = "has_ramp")
+    private Boolean has_ramp;
+    @Column(name = "kep")
+    private Boolean kep;
+    @Column(name = "myBranch")
+    private Boolean myBranch;
 }
