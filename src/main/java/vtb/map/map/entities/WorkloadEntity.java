@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import vtb.map.map.entities.base.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "workload")
 @Entity
@@ -18,9 +15,9 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WorkloadEntity extends BaseEntity {
-//    @ManyToOne
-    @Column (name = "department_entity_id")
-    private long departmentId;
+    @ManyToOne
+    @JoinColumn (name = "department_entity_id")
+    private DepartmentEntity departmentEntity;
     @Column (name = "people_count")
     private Integer people_count;
 }
