@@ -38,3 +38,7 @@ gpt:
   create: https://chat.chatgptdemo.net/new_chat
   delete: https://chat.chatgptdemo.net/delete_chat
   send: https://chat.chatgptdemo.net/chat_api_stream
+bank:
+  max-load: 50
+  register-time:
+    min: 10

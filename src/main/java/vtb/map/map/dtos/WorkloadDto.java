@@ -5,15 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LocalityDto {
+public class WorkloadDto {
     private Long id;
-    private List<DepartmentDto> departmentDtoList;
-    private String name;
-    private Long stateId;
+    private Long department_id;
+    private Integer people_count;
 }

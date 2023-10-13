@@ -33,5 +33,5 @@ public class DepartmentEntity extends BaseEntity {
     @Column(name = "is_atm")
     private boolean is_ATM;
     @Column(name = "locality_entity_id")
-    private boolean localityId;
+    private long localityId;
 }
