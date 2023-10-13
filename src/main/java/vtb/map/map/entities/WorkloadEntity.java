@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WorkloadEntity extends BaseEntity {
-    @ManyToOne
+//    @ManyToOne
     @Column (name = "department_entity_id")
     private long departmentId;
     @Column (name = "people_count")
