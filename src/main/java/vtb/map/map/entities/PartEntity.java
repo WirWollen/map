@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import vtb.map.map.entities.base.BaseEntity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -16,8 +17,12 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PartEntity extends BaseEntity {
+    @Column(name = "service_capability")
     private Boolean service_capability;
+    @Column(name = "service_activity")
     private Boolean service_activity;
+    @Column(name = "large_bills")
     private Boolean large_bills;
+    @Column(name = "small_bills")
     private Boolean small_bills;
 }

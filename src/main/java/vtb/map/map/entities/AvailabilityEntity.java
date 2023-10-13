@@ -22,7 +22,7 @@ public class AvailabilityEntity extends BaseEntity{
     @JoinColumn(name = "wheelchair_entity_id")
     private PartEntity wheelchairEntity;
     @OneToOne
-    @JoinColumn(name = "C_entity_id")
+    @JoinColumn(name = "blind_entity_id")
     private PartEntity blindEntity;
     @OneToOne
     @JoinColumn(name = "nfc_for_bank_cards_entity_id")

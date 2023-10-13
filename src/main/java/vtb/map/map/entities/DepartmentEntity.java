@@ -18,6 +18,7 @@ public class DepartmentEntity extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "work_days_entity_fiz_id")
     private WorkDaysEntity workDaysFizEntity;
+    @OneToOne
     @JoinColumn(name = "work_days_entity_ur_id")
     private WorkDaysEntity workDaysUrEntity;
     @Column(name = "locality_entity_id")
