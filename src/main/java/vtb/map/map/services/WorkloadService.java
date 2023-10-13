@@ -2,8 +2,13 @@ package vtb.map.map.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import vtb.map.map.converters.WorkloadConverter;
+import vtb.map.map.dtos.WorkloadDto;
 import vtb.map.map.repo.DepartmentRepo;
+import vtb.map.map.repo.WorkloadRepo;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -31,5 +36,32 @@ public class WorkloadService {
 
     public int calculateWorkload() {
         return random.nextInt(101);
+    }
+    private final WorkloadRepo workloadRepo;
+    public List<WorkloadDto> showAllWorkload() {
+        return workloadRepo.findAll().stream().map(WorkloadConverter::toDto).collect(Collectors.toList());
+    }
+
+    public WorkloadDto showWorkloadDto(long id) {
+        return WorkloadConverter.toDto(workloadRepo.findById(id).get());
+    }
+
+    public boolean addWorkloadList(List<WorkloadDto> dtoList) {
+        workloadRepo.saveAll(dtoList.stream().map(WorkloadConverter::toEntity).collect(Collectors.toList()));
+        return true;
+    }
+
+    @Transactional
+    public boolean updateWorkload(WorkloadDto dto) {
+        if (workloadRepo.existsById(dto.getId())) {
+            workloadRepo.save(WorkloadConverter.toEntity(dto));
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteWorkloadById(long id) {
+        workloadRepo.deleteById(id);
+        return true;
     }
 }
