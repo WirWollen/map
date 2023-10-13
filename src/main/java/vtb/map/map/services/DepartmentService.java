@@ -46,6 +46,6 @@ public class DepartmentService {
     }
 
     public Map<Long, Integer> getWorkload(Long localityId) {
-        return departmentRepo.getWorkload(localityId).stream().collect(Collectors.toMap(Long::longValue, el -> workloadService.calculateWorkload()));
+        return workloadService.getWorkload(localityId);
     }
 }
