@@ -5,15 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LocalityDto {
+public class RegistrationDto {
     private Long id;
-    private List<DepartmentDto> departmentDtoList;
-    private String name;
-    private Long stateId;
+    private Long department_id;
+    private String code;
+    private Timestamp datetime;
 }
