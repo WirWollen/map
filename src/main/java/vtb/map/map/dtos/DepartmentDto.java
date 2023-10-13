@@ -12,12 +12,18 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DepartmentDto {
     private Long id;
-    private WorkDaysDto workDaysDto;
-    private String coord;
+    private WorkDaysDto workDaysFizDto;
+    private WorkDaysDto workDaysUrDto;
+    private String coord_x;
+    private String coord_y;
     private String postcode;
     private String description;
     private String phone;
-    private Long ATMs_count;
-    private boolean is_ATM;
+    private String office_type;
+    private String sale_point_format;
+    private String suo_availability;
+    private Boolean has_ramp;
+    private Boolean kep;
+    private Boolean myBranch;
     private Long localityId;
 }

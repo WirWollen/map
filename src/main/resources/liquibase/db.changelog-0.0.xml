@@ -58,23 +58,6 @@
         <addForeignKeyConstraint baseColumnNames="day5_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY5_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
         <addForeignKeyConstraint baseColumnNames="day6_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY6_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
         <addForeignKeyConstraint baseColumnNames="day7_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY7_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
-        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
-        <createTable tableName="department">
-            <column name="id" type="serial">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_department"/>
-            </column>
-            <column name="locality_entity_id" type="BIGINT"/>
-            <column name="work_days_entity_id" type="BIGINT"/>
-            <column name="address" type="VARCHAR(255)"/>
-            <column name="coord" type="VARCHAR(255)"/>
-            <column name="postcode" type="VARCHAR(20)"/>
-            <column name="description" type="VARCHAR(255)"/>
-            <column name="phone" type="VARCHAR(100)"/>
-            <column name="atms_count" type="INT"/>
-            <column name="is_atm" type="boolean"/>
-        </createTable>
-        <addForeignKeyConstraint baseColumnNames="locality_entity_id" baseTableName="department" constraintName="FK_DEPARTMENT_ON_LOCALITY_ENTITY" referencedColumnNames="id" referencedTableName="locality"/>
-        <addForeignKeyConstraint baseColumnNames="work_days_entity_id" baseTableName="department" constraintName="FK_DEPARTMENT_ON_WORK_DAYS_ENTITY" referencedColumnNames="id" referencedTableName="work_days"/>
     </changeSet>
 
     <changeSet id="01.10.2023_2" author="wir_wollen">
@@ -108,6 +91,80 @@
             <column name="name" type="VARCHAR(255)"/>
             <column name="url" type="VARCHAR(255)"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="13.10.2023_3" author="test">
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="part">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_part"/>
+            </column>
+            <column name="service_capability" type="BOOLEAN"/>
+            <column name="service_activity" type="BOOLEAN"/>
+            <column name="large_bills" type="BOOLEAN"/>
+            <column name="small_bills" type="BOOLEAN"/>
+        </createTable>
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="availability">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_availability"/>
+            </column>
+            <column name="wheelchair_entity_id" type="BIGINT"/>
+            <column name="blind_entity_id" type="BIGINT"/>
+            <column name="nfc_for_bank_cards_entity_id" type="BIGINT"/>
+            <column name="qr_read_entity_id" type="BIGINT"/>
+            <column name="supports_usd_entity_id" type="BIGINT"/>
+            <column name="supports_charge_rub_entity_id" type="BIGINT"/>
+            <column name="supports_eur_entity_id" type="BIGINT"/>
+            <column name="supports_rub_entity_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="blind_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_BLIND_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
+        <addForeignKeyConstraint baseColumnNames="nfc_for_bank_cards_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_NFC_FOR_BANK_CARDS_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
+        <addForeignKeyConstraint baseColumnNames="qr_read_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_QR_READ_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
+        <addForeignKeyConstraint baseColumnNames="supports_charge_rub_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_SUPPORTS_CHARGE_RUB_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
+        <addForeignKeyConstraint baseColumnNames="supports_eur_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_SUPPORTS_EUR_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
+        <addForeignKeyConstraint baseColumnNames="supports_rub_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_SUPPORTS_RUB_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
+        <addForeignKeyConstraint baseColumnNames="supports_usd_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_SUPPORTS_USD_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
+        <addForeignKeyConstraint baseColumnNames="wheelchair_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_WHEELCHAIR_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
+
+        <createTable tableName="atms">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_atms"/>
+            </column>
+            <column name="availability_entity_id" type="BIGINT"/>
+            <column name="locality_entity_id" type="BIGINT"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="coord_x" type="VARCHAR(255)"/>
+            <column name="coord_y" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="allday" type="BOOLEAN"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="availability_entity_id" baseTableName="atms" constraintName="FK_ATMS_ON_AVAILABILITY_ENTITY" referencedColumnNames="id" referencedTableName="availability"/>
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="department">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_department"/>
+            </column>
+            <column name="work_days_entity_fiz_id" type="BIGINT"/>
+            <column name="work_days_entity_ur_id" type="BIGINT"/>
+            <column name="locality_entity_id" type="BIGINT"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="coord_x" type="VARCHAR(255)"/>
+            <column name="coord_y" type="VARCHAR(255)"/>
+            <column name="postcode" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column name="office_type" type="VARCHAR(255)"/>
+            <column name="sale_point_format" type="VARCHAR(255)"/>
+            <column name="suo_availability" type="VARCHAR(255)"/>
+            <column name="has_ramp" type="BOOLEAN"/>
+            <column name="kep" type="BOOLEAN"/>
+            <column name="my_branch" type="BOOLEAN"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="locality_entity_id" baseTableName="department" constraintName="FK_DEPARTMENT_ON_LOCALITY_ENTITY" referencedColumnNames="id" referencedTableName="locality"/>
+        <addForeignKeyConstraint baseColumnNames="work_days_entity_fiz_id" baseTableName="department" constraintName="FK_DEPARTMENT_ON_WORK_DAYS_ENTITY_FIZ" referencedColumnNames="id" referencedTableName="work_days"/>
+        <addForeignKeyConstraint baseColumnNames="work_days_entity_ur_id" baseTableName="department" constraintName="FK_DEPARTMENT_ON_WORK_DAYS_ENTITY_UR" referencedColumnNames="id" referencedTableName="work_days"/>
     </changeSet>
 
 </databaseChangeLog>
