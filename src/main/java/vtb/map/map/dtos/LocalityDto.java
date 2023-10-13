@@ -15,5 +15,5 @@ public class LocalityDto {
     private Long id;
     private List<DepartmentDto> departmentDtoList;
     private String name;
-    private Long countryId;
+    private Long stateId;
 }

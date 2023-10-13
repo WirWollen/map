@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DepartmentService {
     private final DepartmentRepo departmentRepo;
-    private final Random random = new Random();
+    private final WorkloadService workloadService;
 
     public List<DepartmentDto> showAllDepartments() {
         return departmentRepo.findAll().stream().map(DepartmentConverter::toDto).collect(Collectors.toList());
@@ -46,6 +46,6 @@ public class DepartmentService {
     }
 
     public Map<Long, Integer> getWorkload(Long localityId) {
-        return departmentRepo.getWorkload(localityId).stream().collect(Collectors.toMap(DepartmentEntity::getId, el -> random.nextInt(101)));
+        return departmentRepo.getWorkload(localityId).stream().collect(Collectors.toMap(Long::longValue, el -> workloadService.calculateWorkload()));
     }
 }
