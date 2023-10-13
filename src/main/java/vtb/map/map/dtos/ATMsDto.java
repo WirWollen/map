@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ATMs_Dto {
+public class ATMsDto {
     private Long id;
     private AvailabilityDto availabilityDto;
     private String description;

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ATMs_Entity extends BaseEntity {
+public class ATMsEntity extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "availability_entity_id")
     private AvailabilityEntity availabilityEntity;

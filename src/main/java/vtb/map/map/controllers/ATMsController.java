@@ -2,8 +2,8 @@ package vtb.map.map.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import vtb.map.map.dtos.ATMs_Dto;
-import vtb.map.map.services.ATMs_Service;
+import vtb.map.map.dtos.ATMsDto;
+import vtb.map.map.services.ATMsService;
 
 import java.util.List;
 
@@ -11,26 +11,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/atm_s")
 @CrossOrigin(origins = "http://localhost:3000")
-public class ATM_sController {
-    private final ATMs_Service aTM_sService;
+public class ATMsController {
+    private final ATMsService aTM_sService;
 
     @GetMapping("/getATM_s")
-    public List<ATMs_Dto> getATM_s() {
+    public List<ATMsDto> getATM_s() {
         return aTM_sService.showAllATM_s();
     }
 
     @PostMapping("/getATM_sById")
-    public ATMs_Dto showATM_sDto(@RequestParam long id) {
+    public ATMsDto showATM_sDto(@RequestParam long id) {
         return aTM_sService.showATM_sDto(id);
     }
 
     @PostMapping("/saveAllATM_s")
-    public boolean saveATM_s(@RequestBody List<ATMs_Dto> dto) {
+    public boolean saveATM_s(@RequestBody List<ATMsDto> dto) {
         return aTM_sService.addATM_sList(dto);
     }
 
     @PutMapping("/updateATM_s")
-    public boolean updateATM_s(@RequestBody ATMs_Dto dto) {
+    public boolean updateATM_s(@RequestBody ATMsDto dto) {
         return aTM_sService.updateATM_s(dto);
     }
 

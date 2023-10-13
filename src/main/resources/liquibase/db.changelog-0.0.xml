@@ -167,4 +167,28 @@
         <addForeignKeyConstraint baseColumnNames="work_days_entity_ur_id" baseTableName="department" constraintName="FK_DEPARTMENT_ON_WORK_DAYS_ENTITY_UR" referencedColumnNames="id" referencedTableName="work_days"/>
     </changeSet>
 
+    <changeSet id="14_10_2023" author="wir_wollen">
+
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="workload">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_workload"/>
+            </column>
+            <column name="department_entity_id" type="BIGINT"/>
+            <column name="people_count" type="INT"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="department_entity_id" baseTableName="workload" constraintName="FK_WORKLOAD_ON_DEPARTMENT_ENTITY" referencedColumnNames="id" referencedTableName="department"/>
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="registration">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_registration"/>
+            </column>
+            <column name="department_entity_id" type="BIGINT"/>
+            <column name="code" type="VARCHAR(255)"/>
+            <column name="datetime" type="DATETIME"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="department_entity_id" baseTableName="registration" constraintName="FK_REGISTRATION_ON_DEPARTMENT_ENTITY" referencedColumnNames="id" referencedTableName="department"/>
+
+    </changeSet>
+
 </databaseChangeLog>
