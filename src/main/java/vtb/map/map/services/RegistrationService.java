@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vtb.map.map.converters.RegistrationConverter;
 import vtb.map.map.dtos.RegistrationDto;
+import vtb.map.map.enums.Individual;
 import vtb.map.map.exceptions.TheSpecifiedDateIsNotPossibleException;
 import vtb.map.map.repo.RegistrationRepo;
 
@@ -42,22 +43,27 @@ public class RegistrationService {
         return Timestamp.valueOf(dateTime.toLocalDateTime().plus(registerTime, ChronoUnit.MINUTES));
     }
 
-    private boolean checkOpeningHours(Timestamp time) {
+    //TODO воткнуть ограничение времени регистрации
+    public boolean typeOfClient(Individual type, Timestamp time) {
+        boolean result = false;
+        switch (type) {
+            case INDIVIDUAL -> result = checkOpeningHoursInd(time);
+            //TODO
+            case CORPORATE -> {}
+        }
+        return result;
+    }
+
+    private boolean checkOpeningHoursInd(Timestamp time) {
         boolean result = false;
         switch (time.toLocalDateTime().toLocalDate().getDayOfWeek()) {
-            case MONDAY -> result = registrationRepo.workingMonday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-
-            case TUESDAY -> result = registrationRepo.workingTuesday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-
-            case WEDNESDAY -> result = registrationRepo.workingWednesday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-
-            case THURSDAY -> result = registrationRepo.workingThursday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-
-            case FRIDAY -> result = registrationRepo.workingFriday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-
-            case SATURDAY -> result = registrationRepo.workingSaturday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-
-            case SUNDAY -> result = registrationRepo.workingSunday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case MONDAY -> result = registrationRepo.workingMondayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case TUESDAY -> result = registrationRepo.workingTuesdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case WEDNESDAY -> result = registrationRepo.workingWednesdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case THURSDAY -> result = registrationRepo.workingThursdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case FRIDAY -> result = registrationRepo.workingFridayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case SATURDAY -> result = registrationRepo.workingSaturdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case SUNDAY -> result = registrationRepo.workingSundayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
         }
         return result;
     }
@@ -67,10 +73,16 @@ public class RegistrationService {
     }
 
     @Transactional
-    public String register(Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
+    public String register(Individual type, Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
         RegistrationDto dto = new RegistrationDto();
         if (bankExistenceCheck(departmentId)) {
-            if (!checkOpeningHours(time)) {
+            boolean result = false;
+            switch (type) {
+                case INDIVIDUAL -> result = checkOpeningHoursInd(time);
+                //TODO add corpo
+                case CORPORATE -> {}
+            }
+            if (!result) {
                 throw new TheSpecifiedDateIsNotPossibleException("Discrepancy with bank opening hours");
             }
             if (checkAvailabilityDate(departmentId, time)) {
