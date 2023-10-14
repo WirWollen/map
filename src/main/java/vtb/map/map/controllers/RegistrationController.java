@@ -3,8 +3,11 @@ package vtb.map.map.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import vtb.map.map.dtos.RegistrationDto;
+import vtb.map.map.exceptions.TheSpecifiedDateIsNotPossibleException;
 import vtb.map.map.services.RegistrationService;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,9 +23,9 @@ public class RegistrationController {
     public RegistrationDto showRegistrationDto(@RequestParam long id) {
         return registrationService.showRegistrationDto(id);
     }
-    @PostMapping("/saveAllRegistration")
-    public boolean saveRegistration(@RequestBody List<RegistrationDto> dto) {
-        return registrationService.addRegistrationList(dto);
+    @GetMapping("/register")
+    public String saveRegistration(Long departmentId, Instant time) throws TheSpecifiedDateIsNotPossibleException {
+        return registrationService.register(departmentId, time);
     }
 
     @PutMapping("/updateRegistration")

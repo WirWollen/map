@@ -16,6 +16,7 @@ public class DepartmentDto {
     private WorkDaysDto workDaysUrDto;
     private String coord_x;
     private String coord_y;
+    private String address;
     private String postcode;
     private String description;
     private String phone;

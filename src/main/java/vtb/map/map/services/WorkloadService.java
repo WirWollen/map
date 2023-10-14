@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class WorkloadService {
     private final DepartmentRepo departmentRepo;
+    private final WorkloadRepo workloadRepo;
     private final Random random = new Random();
 
     public int trialTicketGenerator() {
@@ -37,7 +38,7 @@ public class WorkloadService {
     public int calculateWorkload() {
         return random.nextInt(101);
     }
-    private final WorkloadRepo workloadRepo;
+
     public List<WorkloadDto> showAllWorkload() {
         return workloadRepo.findAll().stream().map(WorkloadConverter::toDto).collect(Collectors.toList());
     }
