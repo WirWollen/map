@@ -173,5 +173,15 @@
         <addForeignKeyConstraint baseColumnNames="department_entity_id" baseTableName="registration" constraintName="FK_REGISTRATION_ON_DEPARTMENT_ENTITY" referencedColumnNames="id" referencedTableName="department"/>
 
     </changeSet>
-
+    <changeSet id="14_10_23_1" author="wir_wollen">
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="workloadcorporative">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_workloadcorporative"/>
+            </column>
+            <column name="department_entity_id" type="BIGINT"/>
+            <column name="people_count" type="INT"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="department_entity_id" baseTableName="workloadcorporative" constraintName="FK_WORKLOADCORPORATIVE_ON_DEPARTMENT_ENTITY" referencedColumnNames="id" referencedTableName="department"/>
+    </changeSet>
 </databaseChangeLog>
