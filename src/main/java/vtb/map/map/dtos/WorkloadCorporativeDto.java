@@ -16,4 +16,5 @@ public class WorkloadCorporativeDto {
     private Long department_id;
     private Timestamp time;
     private String name;
+    private boolean is_active;
 }

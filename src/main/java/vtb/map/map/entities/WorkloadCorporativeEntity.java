@@ -23,4 +23,6 @@ public class WorkloadCorporativeEntity extends BaseEntity {
     private Timestamp time;
     @Column(name = "name")
     private String name;
+    @Column(name = "active")
+    private boolean is_active;
 }

@@ -187,7 +187,7 @@
     <changeSet id="14_10_23_2" author="wir_wollen">
         <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
         <createTable tableName="registrationcorporative">
-            <column name="id" type="BIGINT">
+            <column name="id" type="serial">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_registrationcorporative"/>
             </column>
             <column name="department_entity_id" type="BIGINT"/>
@@ -201,6 +201,12 @@
     <changeSet id="14_10_2023_3" author="wir_wollen">
         <addColumn tableName="workloadcorporative">
             <column name="name" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="workload">
+            <column name="active" type="BOOLEAN"/>
+        </addColumn>
+        <addColumn tableName="workloadcorporative">
+            <column name="active" type="BOOLEAN"/>
         </addColumn>
     </changeSet>
 </databaseChangeLog>

@@ -21,4 +21,6 @@ public class WorkloadEntity extends BaseEntity {
     private DepartmentEntity departmentEntity;
     @Column (name = "time")
     private Timestamp time;
+    @Column(name = "active")
+    private boolean is_active;
 }
