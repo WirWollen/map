@@ -9,9 +9,12 @@ import vtb.map.map.dtos.RegistrationDto;
 import vtb.map.map.exceptions.TheSpecifiedDateIsNotPossibleException;
 import vtb.map.map.repo.RegistrationRepo;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -31,28 +34,30 @@ public class RegistrationService {
         return RegistrationConverter.toDto(registrationRepo.findById(id).get());
     }
 
-    //TODO
-    private boolean checkAvailabilityDate(Long departmentId, Instant time) {
-        return true;
+    private boolean checkAvailabilityDate(Long departmentId, Timestamp time) {
+        return registrationRepo.checkAvailabilityDate(departmentId, time, plusTime(time));
     }
 
-    private boolean checkOpeningHours(Instant time) {
+    private Timestamp plusTime(Timestamp dateTime) {
+        return Timestamp.valueOf(dateTime.toLocalDateTime().plus(registerTime, ChronoUnit.MINUTES));
+    }
+
+    private boolean checkOpeningHours(Timestamp time) {
         boolean result = false;
-        Integer plusTime = 60 * registerTime;
-        switch (time.atZone(ZoneId.systemDefault()).getDayOfWeek()) {
-            case MONDAY -> result = registrationRepo.workingMonday(time, time.plusSeconds(plusTime));
+        switch (time.toLocalDateTime().toLocalDate().getDayOfWeek()) {
+            case MONDAY -> result = registrationRepo.workingMonday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
 
-            case TUESDAY -> result = registrationRepo.workingTuesday(time, time.plusSeconds(plusTime));
+            case TUESDAY -> result = registrationRepo.workingTuesday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
 
-            case WEDNESDAY -> result = registrationRepo.workingWednesday(time, time.plusSeconds(plusTime));
+            case WEDNESDAY -> result = registrationRepo.workingWednesday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
 
-            case THURSDAY -> result = registrationRepo.workingThursday(time, time.plusSeconds(plusTime));
+            case THURSDAY -> result = registrationRepo.workingThursday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
 
-            case FRIDAY -> result = registrationRepo.workingFriday(time, time.plusSeconds(plusTime));
+            case FRIDAY -> result = registrationRepo.workingFriday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
 
-            case SATURDAY -> result = registrationRepo.workingSaturday(time, time.plusSeconds(plusTime));
+            case SATURDAY -> result = registrationRepo.workingSaturday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
 
-            case SUNDAY -> result = registrationRepo.workingSunday(time, time.plusSeconds(plusTime));
+            case SUNDAY -> result = registrationRepo.workingSunday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
         }
         return result;
     }
@@ -62,14 +67,14 @@ public class RegistrationService {
     }
 
     @Transactional
-    public String register(Long departmentId, Instant time) throws TheSpecifiedDateIsNotPossibleException {
+    public String register(Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
         RegistrationDto dto = new RegistrationDto();
         if (bankExistenceCheck(departmentId)) {
             if (!checkOpeningHours(time)) {
                 throw new TheSpecifiedDateIsNotPossibleException("Discrepancy with bank opening hours");
             }
             if (checkAvailabilityDate(departmentId, time)) {
-                dto.setDatetime(new Timestamp(time.toEpochMilli()));
+                dto.setDatetime(time);
             } else {
                 throw new TheSpecifiedDateIsNotPossibleException("The specified time is already taken");
             }

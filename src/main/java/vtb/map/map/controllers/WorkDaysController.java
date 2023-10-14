@@ -34,4 +34,9 @@ public class WorkDaysController {
     public boolean deleteWorkDaysById(@RequestParam long id) {
         return workDaysService.deleteWorkDaysById(id);
     }
+
+    @PostMapping("/addWorkDays")
+    public Long addWorkDays(@RequestBody WorkDaysDto dto) {
+        return workDaysService.addWorkDay(dto);
+    }
 }

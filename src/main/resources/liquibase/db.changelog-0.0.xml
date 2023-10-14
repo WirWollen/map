@@ -31,33 +31,25 @@
         </createTable>
         <addForeignKeyConstraint baseColumnNames="state_entity_id" baseTableName="locality" constraintName="FK_LOCALITY_ON_STATE_ENTITY" referencedColumnNames="id" referencedTableName="state"/>
         <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
-        <createTable tableName="day">
-            <column name="id" type="serial">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_day"/>
-            </column>
-            <column name="start" type="TIME"/>
-            <column name="finish" type="TIME"/>
-        </createTable>
-        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
         <createTable tableName="work_days">
             <column name="id" type="serial">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_work_days"/>
             </column>
-            <column name="day1_entity_id" type="BIGINT"/>
-            <column name="day2_entity_id" type="BIGINT"/>
-            <column name="day3_entity_id" type="BIGINT"/>
-            <column name="day4_entity_id" type="BIGINT"/>
-            <column name="day5_entity_id" type="BIGINT"/>
-            <column name="day6_entity_id" type="BIGINT"/>
-            <column name="day7_entity_id" type="BIGINT"/>
+            <column name="mon_s" type="TIME"/>
+            <column name="mon_f" type="TIME"/>
+            <column name="tue_s" type="TIME"/>
+            <column name="tue_f" type="TIME"/>
+            <column name="wed_s" type="TIME"/>
+            <column name="wed_f" type="TIME"/>
+            <column name="thu_s" type="TIME"/>
+            <column name="thu_f" type="TIME"/>
+            <column name="fri_s" type="TIME"/>
+            <column name="fri_f" type="TIME"/>
+            <column name="sat_s" type="TIME"/>
+            <column name="sat_f" type="TIME"/>
+            <column name="sun_s" type="TIME"/>
+            <column name="sun_f" type="TIME"/>
         </createTable>
-        <addForeignKeyConstraint baseColumnNames="day1_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY1_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
-        <addForeignKeyConstraint baseColumnNames="day2_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY2_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
-        <addForeignKeyConstraint baseColumnNames="day3_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY3_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
-        <addForeignKeyConstraint baseColumnNames="day4_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY4_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
-        <addForeignKeyConstraint baseColumnNames="day5_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY5_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
-        <addForeignKeyConstraint baseColumnNames="day6_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY6_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
-        <addForeignKeyConstraint baseColumnNames="day7_entity_id" baseTableName="work_days" constraintName="FK_WORK_DAYS_ON_DAY7_ENTITY" referencedColumnNames="id" referencedTableName="day"/>
     </changeSet>
 
     <changeSet id="01.10.2023_2" author="wir_wollen">

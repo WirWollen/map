@@ -1,33 +1,48 @@
 package vtb.map.map.converters;
 
-import org.springframework.beans.BeanUtils;
+import vtb.map.map.dtos.DayDto;
 import vtb.map.map.dtos.WorkDaysDto;
 import vtb.map.map.entities.WorkDaysEntity;
 
 public class WorkDaysConverter {
-    public static WorkDaysDto toDto(WorkDaysEntity entity){
+    public static WorkDaysDto toDto(WorkDaysEntity entity) {
         WorkDaysDto dto = new WorkDaysDto();
-        BeanUtils.copyProperties(entity, dto);
-        dto.setDay1(DayConverter.toDto(entity.getDay1Entity()));
-        dto.setDay2(DayConverter.toDto(entity.getDay2Entity()));
-        dto.setDay3(DayConverter.toDto(entity.getDay3Entity()));
-        dto.setDay4(DayConverter.toDto(entity.getDay4Entity()));
-        dto.setDay5(DayConverter.toDto(entity.getDay5Entity()));
-        dto.setDay6(DayConverter.toDto(entity.getDay6Entity()));
-        dto.setDay7(DayConverter.toDto(entity.getDay7Entity()));
+        dto.setId(entity.getId());
+        dto.setDay1(new DayDto(null, entity.getMon_s(), entity.getMon_f()));
+        dto.setDay2(new DayDto(null, entity.getTue_s(), entity.getTue_f()));
+        dto.setDay3(new DayDto(null, entity.getWed_s(), entity.getWed_f()));
+        dto.setDay4(new DayDto(null, entity.getThu_s(), entity.getThu_f()));
+        dto.setDay5(new DayDto(null, entity.getFri_s(), entity.getFri_f()));
+        dto.setDay6(new DayDto(null, entity.getSat_s(), entity.getSat_f()));
+        dto.setDay7(new DayDto(null, entity.getSun_s(), entity.getSun_f()));
+
         return dto;
     }
 
-    public static WorkDaysEntity toEntity(WorkDaysDto dto){
+    public static WorkDaysEntity toEntity(WorkDaysDto dto) {
         WorkDaysEntity entity = new WorkDaysEntity();
-        BeanUtils.copyProperties(dto, entity);
-        entity.setDay1Entity(DayConverter.toEntity(dto.getDay1()));
-        entity.setDay2Entity(DayConverter.toEntity(dto.getDay2()));
-        entity.setDay3Entity(DayConverter.toEntity(dto.getDay3()));
-        entity.setDay4Entity(DayConverter.toEntity(dto.getDay4()));
-        entity.setDay5Entity(DayConverter.toEntity(dto.getDay5()));
-        entity.setDay6Entity(DayConverter.toEntity(dto.getDay6()));
-        entity.setDay7Entity(DayConverter.toEntity(dto.getDay7()));
+
+        entity.setMon_s(dto.getDay1().getStart());
+        entity.setMon_f(dto.getDay1().getFinish());
+
+        entity.setTue_s(dto.getDay2().getStart());
+        entity.setTue_f(dto.getDay2().getFinish());
+
+        entity.setWed_s(dto.getDay3().getStart());
+        entity.setWed_f(dto.getDay3().getFinish());
+
+        entity.setThu_s(dto.getDay4().getStart());
+        entity.setThu_f(dto.getDay4().getFinish());
+
+        entity.setFri_s(dto.getDay5().getStart());
+        entity.setFri_f(dto.getDay5().getFinish());
+
+        entity.setSat_s(dto.getDay6().getStart());
+        entity.setSat_f(dto.getDay6().getFinish());
+
+        entity.setSun_s(dto.getDay7().getStart());
+        entity.setSun_f(dto.getDay7().getFinish());
+
         return entity;
     }
 }
