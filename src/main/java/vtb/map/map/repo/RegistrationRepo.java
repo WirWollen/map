@@ -58,9 +58,11 @@ public interface RegistrationRepo extends CrudRepository<RegistrationEntity, Lon
     boolean workingSunday(Time start, Time finish);
 
     @Query(value = "SELECT EXISTS( SELECT 1 FROM department WHERE id = ?1 ) " +
-            "AND NOT EXISTS(SELECT 1 FROM register WHERE datetime BETWEEN ?2 AND ?3 );", nativeQuery = true)
+            "AND NOT EXISTS(SELECT 1 FROM registration WHERE datetime BETWEEN ?2 AND ?3 );", nativeQuery = true)
     boolean checkAvailabilityDate(Long departmentId, Timestamp start, Timestamp finish);
 
-    @Query(value = "SELECT COUNT(*) FROM registration WHERE datetime > ?1 AND datetime < ?2", nativeQuery = true)
-    Integer calculateRegistration(LocalDateTime startTime, LocalDateTime endTime);
+    @Query(value = "SELECT COUNT(*) FROM registration \n" +
+            "JOIN department ON registration.department_entity_id = department.id \n" +
+            "WHERE datetime > ?1 AND datetime < ?2 AND active = true AND locality_entity_id = ?3", nativeQuery = true)
+    Integer calculateRegistration(LocalDateTime startTime, LocalDateTime endTime, Long localityId);
 }

@@ -180,9 +180,9 @@ public class DepartmentService {
         return result;
     }
 
-    public Integer calculateTimeInd() {
-        Integer countClients = workloadRepo.calculateClients(LocalDateTime.now().minus(overwatchBefore, ChronoUnit.MINUTES), LocalDateTime.now().plus(overwatchAfter, ChronoUnit.MINUTES));
-        Integer countElectro = registrationRepo.calculateRegistration(LocalDateTime.now().minus(overwatchBefore, ChronoUnit.MINUTES), LocalDateTime.now().plus(overwatchAfter, ChronoUnit.MINUTES));
+    public Integer calculateTimeInd(Long localityId) {
+        Integer countClients = workloadRepo.calculateClients(LocalDateTime.now().minus(overwatchBefore, ChronoUnit.MINUTES), LocalDateTime.now().plus(overwatchAfter, ChronoUnit.MINUTES), localityId);
+        Integer countElectro = registrationRepo.calculateRegistration(LocalDateTime.now().minus(overwatchBefore, ChronoUnit.MINUTES), LocalDateTime.now().plus(overwatchAfter, ChronoUnit.MINUTES), localityId);
 
         return (countClients + countElectro) * registerTime / del;
     }

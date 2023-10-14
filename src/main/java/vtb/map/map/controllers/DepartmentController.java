@@ -52,4 +52,9 @@ public class DepartmentController {
     public String saveRegistration(Individual type, Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
         return departmentService.register(type, departmentId, time);
     }
+
+    @GetMapping("/test")
+    public Integer test(Long id) {
+        return departmentService.calculateTimeInd(id);
+    }
 }
