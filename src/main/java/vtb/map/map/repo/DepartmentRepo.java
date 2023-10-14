@@ -12,4 +12,7 @@ public interface DepartmentRepo extends CrudRepository<DepartmentEntity, Long> {
 
     @Query(value = "SELECT id FROM department where locality_entity_id = ?1", nativeQuery = true)
     Set<Long> getWorkload(Long localityId);
+
+    @Query(value = "SELECT id FROM department where locality_entity_id = ?1", nativeQuery = true)
+    Set<Long> getWorkloadCorporative(Long localityId);
 }
