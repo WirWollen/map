@@ -24,7 +24,7 @@ public class RegistrationController {
         return registrationService.showRegistrationDto(id);
     }
     @GetMapping("/register")
-    public String saveRegistration(Long departmentId, Instant time) throws TheSpecifiedDateIsNotPossibleException {
+    public String saveRegistration(Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
         return registrationService.register(departmentId, time);
     }
 
