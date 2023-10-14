@@ -25,4 +25,8 @@ public interface LocalityRepo extends CrudRepository<LocalityEntity, Long> {
 
     @Query(value = "SELECT id FROM locality WHERE name NOT LIKE CONCAT('%', ?1, '%')", nativeQuery = true)
     Set<LocalityEntity> findNotContains(String name);
+
+    @Query(value = "SELECT * FROM locality WHERE name LIKE CONCAT('%', ?1, '%') LIMIT 1", nativeQuery = true)
+//    @Query(value = "SELECT * FROM locality WHERE name = ?1 LIMIT 1", nativeQuery = true)
+    LocalityEntity findEqualLocality(String name);
 }

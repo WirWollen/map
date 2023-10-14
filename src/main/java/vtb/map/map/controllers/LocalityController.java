@@ -16,13 +16,17 @@ import java.util.Set;
 @CrossOrigin(origins = "http://localhost:3000")
 public class LocalityController {
     private final LocalityService localityService;
+
     @GetMapping("/getLocalities")
-    public List<LocalityDto> getLocalities() {return localityService.showAllLocalities();}
+    public List<LocalityDto> getLocalities() {
+        return localityService.showAllLocalities();
+    }
 
     @PostMapping("/getLocalityById")
     public LocalityDto showLocalityDto(@RequestParam long id) {
         return localityService.showLocalityDto(id);
     }
+
     @PostMapping("/saveAllLocalities")
     public boolean saveLocality(@RequestBody List<LocalityDto> dto) {
         return localityService.addLocalityList(dto);
@@ -44,7 +48,12 @@ public class LocalityController {
     }
 
     @GetMapping("/findByName")
-    public Set<Long> findLocalityByName(SearchFilter filter, String name) {
+    public Set<Long> findByName(SearchFilter filter, String name) {
         return localityService.findByName(filter, name);
+    }
+
+    @GetMapping("/findLocalityByName")
+    public LocalityDto findLocalityByName(String name) {
+        return localityService.findByName(name);
     }
 }

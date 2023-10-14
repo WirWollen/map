@@ -6,6 +6,7 @@ import vtb.map.map.entities.RegistrationEntity;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RegistrationRepo extends CrudRepository<RegistrationEntity, Long> {
@@ -60,4 +61,6 @@ public interface RegistrationRepo extends CrudRepository<RegistrationEntity, Lon
             "AND NOT EXISTS(SELECT 1 FROM register WHERE datetime BETWEEN ?2 AND ?3 );", nativeQuery = true)
     boolean checkAvailabilityDate(Long departmentId, Timestamp start, Timestamp finish);
 
+    @Query(value = "SELECT COUNT(*) FROM registration WHERE datetime > ?1 AND datetime < ?2", nativeQuery = true)
+    Integer calculateRegistration(LocalDateTime startTime, LocalDateTime endTime);
 }

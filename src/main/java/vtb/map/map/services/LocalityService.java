@@ -68,4 +68,8 @@ public class LocalityService {
             default -> throw new RuntimeException();
         }
     }
+
+    public LocalityDto findByName(String name) {
+        return LocalityConverter.toDto(localityRepo.findEqualLocality(name));
+    }
 }

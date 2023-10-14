@@ -6,16 +6,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vtb.map.map.converters.DepartmentConverter;
 import vtb.map.map.converters.RegistrationConverter;
+import vtb.map.map.converters.RegistrationCorporativeConverter;
 import vtb.map.map.dtos.DepartmentDto;
+import vtb.map.map.dtos.RegistrationCorporativeDto;
 import vtb.map.map.dtos.RegistrationDto;
 import vtb.map.map.enums.Individual;
 import vtb.map.map.exceptions.TheSpecifiedDateIsNotPossibleException;
 import vtb.map.map.repo.DepartmentRepo;
 import vtb.map.map.repo.RegistrationCorporativeRepo;
 import vtb.map.map.repo.RegistrationRepo;
+import vtb.map.map.repo.WorkloadRepo;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,10 +29,17 @@ import java.util.stream.Collectors;
 public class DepartmentService {
     @Value("${bank.register-time.min}")
     private Integer registerTime;
+    @Value("${bank.register-time.del}")
+    private Integer del;
+    @Value("${bank.overwatch.before-min}")
+    private Integer overwatchBefore;
+    @Value("${bank.overwatch.after-min}")
+    private Integer overwatchAfter;
     private final DepartmentRepo departmentRepo;
     private final RegistrationRepo registrationRepo;
     private RegistrationCorporativeRepo registrationCorporativeRepo;
     private final WorkloadService workloadService;
+    private final WorkloadRepo workloadRepo;
 
     public List<DepartmentDto> showAllDepartments() {
         return departmentRepo.findAll().stream().map(DepartmentConverter::toDto).collect(Collectors.toList());
@@ -122,8 +133,8 @@ public class DepartmentService {
         return result;
     }
 
-    @Transactional
-    public String register(Individual type, Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
+    //TODO воткнуть полиморфизм
+    private String individual(Individual type, Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
         RegistrationDto dto = new RegistrationDto();
         if (bankExistenceCheck(type, departmentId)) {
             if (!typeOfClient(type, time)) {
@@ -139,5 +150,40 @@ public class DepartmentService {
             registrationRepo.save(RegistrationConverter.toEntity(dto));
         }
         return dto.getCode();
+    }
+
+    private String corpo(Individual type, Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
+        RegistrationCorporativeDto dto = new RegistrationCorporativeDto();
+        if (bankExistenceCheck(type, departmentId)) {
+            if (!typeOfClient(type, time)) {
+                throw new TheSpecifiedDateIsNotPossibleException("Discrepancy with bank opening hours");
+            }
+            if (checkAvailabilityDate(type, departmentId, time)) {
+                dto.setDatetime(time);
+            } else {
+                throw new TheSpecifiedDateIsNotPossibleException("The specified time is already taken");
+            }
+            dto.setDepartment_id(departmentId);
+            dto.setCode(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
+            registrationCorporativeRepo.save(RegistrationCorporativeConverter.toEntity(dto));
+        }
+        return dto.getCode();
+    }
+
+    @Transactional
+    public String register(Individual type, Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
+        String result = null;
+        switch (type) {
+            case INDIVIDUAL -> result = individual(type, departmentId, time);
+            case CORPORATE -> result = corpo(type, departmentId, time);
+        }
+        return result;
+    }
+
+    public Integer calculateTimeInd() {
+        Integer countClients = workloadRepo.calculateClients(LocalDateTime.now().minus(overwatchBefore, ChronoUnit.MINUTES), LocalDateTime.now().plus(overwatchAfter, ChronoUnit.MINUTES));
+        Integer countElectro = registrationRepo.calculateRegistration(LocalDateTime.now().minus(overwatchBefore, ChronoUnit.MINUTES), LocalDateTime.now().plus(overwatchAfter, ChronoUnit.MINUTES));
+
+        return (countClients + countElectro) * registerTime / del;
     }
 }

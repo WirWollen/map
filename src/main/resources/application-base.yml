@@ -41,4 +41,8 @@ gpt:
 bank:
   max-load: 50
   register-time:
-    min: 10
+    min: 12
+    del: 3
+  overwatch:
+    before-min: 10
+    after-min: 600
