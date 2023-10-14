@@ -8,11 +8,10 @@ import vtb.map.map.converters.DepartmentConverter;
 import vtb.map.map.converters.RegistrationConverter;
 import vtb.map.map.dtos.DepartmentDto;
 import vtb.map.map.dtos.RegistrationDto;
-import vtb.map.map.entities.DepartmentEntity;
-import vtb.map.map.entities.LocalityEntity;
 import vtb.map.map.enums.Individual;
 import vtb.map.map.exceptions.TheSpecifiedDateIsNotPossibleException;
 import vtb.map.map.repo.DepartmentRepo;
+import vtb.map.map.repo.RegistrationCorporativeRepo;
 import vtb.map.map.repo.RegistrationRepo;
 
 import java.sql.Time;
@@ -28,6 +27,7 @@ public class DepartmentService {
     private Integer registerTime;
     private final DepartmentRepo departmentRepo;
     private final RegistrationRepo registrationRepo;
+    private RegistrationCorporativeRepo registrationCorporativeRepo;
     private final WorkloadService workloadService;
 
     public List<DepartmentDto> showAllDepartments() {
@@ -61,8 +61,13 @@ public class DepartmentService {
         return workloadService.getWorkload(localityId);
     }
 
-    private boolean checkAvailabilityDate(Long departmentId, Timestamp time) {
-        return registrationRepo.checkAvailabilityDate(departmentId, time, plusTime(time));
+    private boolean checkAvailabilityDate(Individual type, Long departmentId, Timestamp time) {
+        boolean result = false;
+        switch (type) {
+            case INDIVIDUAL -> result = registrationRepo.checkAvailabilityDate(departmentId, time, plusTime(time));
+            case CORPORATE -> result = registrationCorporativeRepo.checkAvailabilityDate(departmentId, time, plusTime(time));
+        }
+        return result;
     }
 
     private Timestamp plusTime(Timestamp dateTime) {
@@ -74,44 +79,57 @@ public class DepartmentService {
         boolean result = false;
         switch (type) {
             case INDIVIDUAL -> result = checkOpeningHoursInd(time);
-            //TODO
-            case CORPORATE -> {}
+            case CORPORATE -> result = checkOpeningHoursCorpo(time);
         }
         return result;
     }
 
+    //TODO воткнуть фабрику
     private boolean checkOpeningHoursInd(Timestamp time) {
         boolean result = false;
         switch (time.toLocalDateTime().toLocalDate().getDayOfWeek()) {
-            case MONDAY -> result = registrationRepo.workingMondayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case TUESDAY -> result = registrationRepo.workingTuesdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case WEDNESDAY -> result = registrationRepo.workingWednesdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case THURSDAY -> result = registrationRepo.workingThursdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case FRIDAY -> result = registrationRepo.workingFridayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case SATURDAY -> result = registrationRepo.workingSaturdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case SUNDAY -> result = registrationRepo.workingSundayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case MONDAY -> result = registrationRepo.workingMonday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case TUESDAY -> result = registrationRepo.workingTuesday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case WEDNESDAY -> result = registrationRepo.workingWednesday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case THURSDAY -> result = registrationRepo.workingThursday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case FRIDAY -> result = registrationRepo.workingFriday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case SATURDAY -> result = registrationRepo.workingSaturday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case SUNDAY -> result = registrationRepo.workingSunday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
         }
         return result;
     }
 
-    private boolean bankExistenceCheck(Long departmentId) {
-        return registrationRepo.departmentExists(departmentId);
+    private boolean checkOpeningHoursCorpo(Timestamp time) {
+        boolean result = false;
+        switch (time.toLocalDateTime().toLocalDate().getDayOfWeek()) {
+            case MONDAY -> result = registrationCorporativeRepo.workingMonday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case TUESDAY -> result = registrationCorporativeRepo.workingTuesday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case WEDNESDAY -> result = registrationCorporativeRepo.workingWednesday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case THURSDAY -> result = registrationCorporativeRepo.workingThursday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case FRIDAY -> result = registrationCorporativeRepo.workingFriday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case SATURDAY -> result = registrationCorporativeRepo.workingSaturday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+            case SUNDAY -> result = registrationCorporativeRepo.workingSunday(new Time(time.getTime()), new Time(plusTime(time).getTime()));
+        }
+        return result;
+    }
+
+    private boolean bankExistenceCheck(Individual type, Long departmentId) {
+        boolean result = false;
+        switch (type) {
+            case INDIVIDUAL -> registrationRepo.departmentExists(departmentId);
+            case CORPORATE -> registrationCorporativeRepo.departmentExists(departmentId);
+        }
+        return result;
     }
 
     @Transactional
     public String register(Individual type, Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
         RegistrationDto dto = new RegistrationDto();
-        if (bankExistenceCheck(departmentId)) {
-            boolean result = false;
-            switch (type) {
-                case INDIVIDUAL -> result = checkOpeningHoursInd(time);
-                //TODO add corpo
-                case CORPORATE -> {}
-            }
-            if (!result) {
+        if (bankExistenceCheck(type, departmentId)) {
+            if (!typeOfClient(type, time)) {
                 throw new TheSpecifiedDateIsNotPossibleException("Discrepancy with bank opening hours");
             }
-            if (checkAvailabilityDate(departmentId, time)) {
+            if (checkAvailabilityDate(type, departmentId, time)) {
                 dto.setDatetime(time);
             } else {
                 throw new TheSpecifiedDateIsNotPossibleException("The specified time is already taken");

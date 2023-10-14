@@ -1,13 +1,14 @@
 package vtb.map.map.repo;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import vtb.map.map.entities.RegistrationCorporativeEntity;
 
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
-public interface RegistrationCorporativeRepo {
+public interface RegistrationCorporativeRepo extends CrudRepository<RegistrationCorporativeEntity, Long> {
     List<RegistrationCorporativeEntity> findAll();
 
     @Query(value = "SELECT CASE WHEN EXISTS (SELECT 1 FROM department WHERE id = ?1) THEN true ELSE false END AS result;", nativeQuery = true)
