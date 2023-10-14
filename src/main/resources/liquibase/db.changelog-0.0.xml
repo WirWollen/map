@@ -87,39 +87,30 @@
 
     <changeSet id="13.10.2023_3" author="test">
         <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
-        <createTable tableName="part">
-            <column name="id" type="serial">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_part"/>
-            </column>
-            <column name="service_capability" type="BOOLEAN"/>
-            <column name="service_activity" type="BOOLEAN"/>
-            <column name="large_bills" type="BOOLEAN"/>
-            <column name="small_bills" type="BOOLEAN"/>
-        </createTable>
-        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
-        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
         <createTable tableName="availability">
             <column name="id" type="serial">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_availability"/>
             </column>
-            <column name="wheelchair_entity_id" type="BIGINT"/>
-            <column name="blind_entity_id" type="BIGINT"/>
-            <column name="nfc_for_bank_cards_entity_id" type="BIGINT"/>
-            <column name="qr_read_entity_id" type="BIGINT"/>
-            <column name="supports_usd_entity_id" type="BIGINT"/>
-            <column name="supports_charge_rub_entity_id" type="BIGINT"/>
-            <column name="supports_eur_entity_id" type="BIGINT"/>
-            <column name="supports_rub_entity_id" type="BIGINT"/>
+            <column name="wheelchair_cap" type="BOOLEAN"/>
+            <column name="wheelchair_act" type="BOOLEAN"/>
+            <column name="blind_cap" type="BOOLEAN"/>
+            <column name="blind_act" type="BOOLEAN"/>
+            <column name="nfc_for_bank_cards_cap" type="BOOLEAN"/>
+            <column name="nfc_for_bank_cards_act" type="BOOLEAN"/>
+            <column name="qr_read_cap" type="BOOLEAN"/>
+            <column name="qr_read_act" type="BOOLEAN"/>
+            <column name="supports_usd_cap" type="BOOLEAN"/>
+            <column name="supports_usd_act" type="BOOLEAN"/>
+            <column name="supports_charge_rub_cap" type="BOOLEAN"/>
+            <column name="supports_charge_rub_act" type="BOOLEAN"/>
+            <column name="supports_eur_cap" type="BOOLEAN"/>
+            <column name="supports_eur_act" type="BOOLEAN"/>
+            <column name="supports_rub_cap" type="BOOLEAN"/>
+            <column name="supports_rub_act" type="BOOLEAN"/>
+            <column name="rub_large_bills" type="BOOLEAN"/>
+            <column name="rub_small_bills" type="BOOLEAN"/>
         </createTable>
-        <addForeignKeyConstraint baseColumnNames="blind_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_BLIND_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
-        <addForeignKeyConstraint baseColumnNames="nfc_for_bank_cards_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_NFC_FOR_BANK_CARDS_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
-        <addForeignKeyConstraint baseColumnNames="qr_read_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_QR_READ_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
-        <addForeignKeyConstraint baseColumnNames="supports_charge_rub_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_SUPPORTS_CHARGE_RUB_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
-        <addForeignKeyConstraint baseColumnNames="supports_eur_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_SUPPORTS_EUR_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
-        <addForeignKeyConstraint baseColumnNames="supports_rub_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_SUPPORTS_RUB_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
-        <addForeignKeyConstraint baseColumnNames="supports_usd_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_SUPPORTS_USD_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
-        <addForeignKeyConstraint baseColumnNames="wheelchair_entity_id" baseTableName="availability" constraintName="FK_AVAILABILITY_ON_WHEELCHAIR_ENTITY" referencedColumnNames="id" referencedTableName="part"/>
-
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
         <createTable tableName="atms">
             <column name="id" type="serial">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_atms"/>

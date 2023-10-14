@@ -5,14 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PartDto {
+public class RegistrationCorporativeDto {
     private Long id;
-    private Boolean service_capability;
-    private Boolean service_activity;
-    private Boolean large_bills;
-    private Boolean small_bills;
+    private Long department_id;
+    private String code;
+    private Timestamp datetime;
 }
