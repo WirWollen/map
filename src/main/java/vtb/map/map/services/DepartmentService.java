@@ -127,8 +127,8 @@ public class DepartmentService {
     private boolean bankExistenceCheck(Individual type, Long departmentId) {
         boolean result = false;
         switch (type) {
-            case INDIVIDUAL -> registrationRepo.departmentExists(departmentId);
-            case CORPORATE -> registrationCorporativeRepo.departmentExists(departmentId);
+            case INDIVIDUAL -> result = registrationRepo.departmentExists(departmentId);
+            case CORPORATE -> result = registrationCorporativeRepo.departmentExists(departmentId);
         }
         return result;
     }
