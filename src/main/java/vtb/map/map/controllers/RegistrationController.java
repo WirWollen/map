@@ -3,6 +3,7 @@ package vtb.map.map.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import vtb.map.map.dtos.RegistrationDto;
+import vtb.map.map.enums.Individual;
 import vtb.map.map.exceptions.TheSpecifiedDateIsNotPossibleException;
 import vtb.map.map.services.RegistrationService;
 
@@ -27,8 +28,8 @@ public class RegistrationController {
     }
 
     @GetMapping("/register")
-    public String saveRegistration(Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
-        return registrationService.register(departmentId, time);
+    public String saveRegistration(Individual type, Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
+        return registrationService.register(type, departmentId, time);
     }
 
     @PutMapping("/updateRegistration")
