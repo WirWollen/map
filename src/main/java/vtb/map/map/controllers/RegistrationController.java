@@ -7,7 +7,6 @@ import vtb.map.map.exceptions.TheSpecifiedDateIsNotPossibleException;
 import vtb.map.map.services.RegistrationService;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,13 +15,17 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class RegistrationController {
     private final RegistrationService registrationService;
+
     @GetMapping("/getRegistration")
-    public List<RegistrationDto> getRegistration() {return registrationService.showAllRegistration();}
+    public List<RegistrationDto> getRegistration() {
+        return registrationService.showAllRegistration();
+    }
 
     @PostMapping("/getRegistrationById")
     public RegistrationDto showRegistrationDto(@RequestParam long id) {
         return registrationService.showRegistrationDto(id);
     }
+
     @GetMapping("/register")
     public String saveRegistration(Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
         return registrationService.register(departmentId, time);

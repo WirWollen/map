@@ -21,9 +21,14 @@ public class WorkDaysService {
 
     public WorkDaysDto showWorkDaysDto(long id){return WorkDaysConverter.toDto(workDaysRepo.findById(id).get());}
 
+    @Deprecated
     public boolean addWorkDaysList(List<WorkDaysDto> dtoList){
         workDaysRepo.saveAll(dtoList.stream().map(WorkDaysConverter::toEntity).collect(Collectors.toList()));
         return true;
+    }
+
+    public Long addWorkDay(WorkDaysDto dto) {
+        return workDaysRepo.save(WorkDaysConverter.toEntity(dto)).getId();
     }
 
     @Transactional

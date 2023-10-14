@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import vtb.map.map.entities.base.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.sql.Time;
 
 @Table(name = "work_days")
 @Entity
@@ -15,25 +17,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WorkDaysEntity extends BaseEntity {
-    @OneToOne
-    @JoinColumn(name = "day1_entity_id")
-    private DayEntity day1Entity;
-    @OneToOne
-    @JoinColumn(name = "day2_entity_id")
-    private DayEntity day2Entity;
-    @OneToOne
-    @JoinColumn(name = "day3_entity_id")
-    private DayEntity day3Entity;
-    @OneToOne
-    @JoinColumn(name = "day4_entity_id")
-    private DayEntity day4Entity;
-    @OneToOne
-    @JoinColumn(name = "day5_entity_id")
-    private DayEntity day5Entity;
-    @OneToOne
-    @JoinColumn(name = "day6_entity_id")
-    private DayEntity day6Entity;
-    @OneToOne
-    @JoinColumn(name = "day7_entity_id")
-    private DayEntity day7Entity;
+    private Time mon_s;
+    private Time mon_f;
+    private Time tue_s;
+    private Time tue_f;
+    private Time wed_s;
+    private Time wed_f;
+    private Time thu_s;
+    private Time thu_f;
+    private Time fri_s;
+    private Time fri_f;
+    private Time sat_s;
+    private Time sat_f;
+    private Time sun_s;
+    private Time sun_f;
 }
