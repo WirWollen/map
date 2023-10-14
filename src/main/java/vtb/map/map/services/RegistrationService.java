@@ -23,8 +23,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class RegistrationService {
-    @Value("${bank.register-time.min}")
-    private Integer registerTime;
     private final RegistrationRepo registrationRepo;
 
     public List<RegistrationDto> showAllRegistration() {
@@ -33,68 +31,6 @@ public class RegistrationService {
 
     public RegistrationDto showRegistrationDto(long id) {
         return RegistrationConverter.toDto(registrationRepo.findById(id).get());
-    }
-
-    private boolean checkAvailabilityDate(Long departmentId, Timestamp time) {
-        return registrationRepo.checkAvailabilityDate(departmentId, time, plusTime(time));
-    }
-
-    private Timestamp plusTime(Timestamp dateTime) {
-        return Timestamp.valueOf(dateTime.toLocalDateTime().plus(registerTime, ChronoUnit.MINUTES));
-    }
-
-    //TODO воткнуть ограничение времени регистрации
-    public boolean typeOfClient(Individual type, Timestamp time) {
-        boolean result = false;
-        switch (type) {
-            case INDIVIDUAL -> result = checkOpeningHoursInd(time);
-            //TODO
-            case CORPORATE -> {}
-        }
-        return result;
-    }
-
-    private boolean checkOpeningHoursInd(Timestamp time) {
-        boolean result = false;
-        switch (time.toLocalDateTime().toLocalDate().getDayOfWeek()) {
-            case MONDAY -> result = registrationRepo.workingMondayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case TUESDAY -> result = registrationRepo.workingTuesdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case WEDNESDAY -> result = registrationRepo.workingWednesdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case THURSDAY -> result = registrationRepo.workingThursdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case FRIDAY -> result = registrationRepo.workingFridayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case SATURDAY -> result = registrationRepo.workingSaturdayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-            case SUNDAY -> result = registrationRepo.workingSundayFiz(new Time(time.getTime()), new Time(plusTime(time).getTime()));
-        }
-        return result;
-    }
-
-    private boolean bankExistenceCheck(Long departmentId) {
-        return registrationRepo.departmentExists(departmentId);
-    }
-
-    @Transactional
-    public String register(Individual type, Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
-        RegistrationDto dto = new RegistrationDto();
-        if (bankExistenceCheck(departmentId)) {
-            boolean result = false;
-            switch (type) {
-                case INDIVIDUAL -> result = checkOpeningHoursInd(time);
-                //TODO add corpo
-                case CORPORATE -> {}
-            }
-            if (!result) {
-                throw new TheSpecifiedDateIsNotPossibleException("Discrepancy with bank opening hours");
-            }
-            if (checkAvailabilityDate(departmentId, time)) {
-                dto.setDatetime(time);
-            } else {
-                throw new TheSpecifiedDateIsNotPossibleException("The specified time is already taken");
-            }
-            dto.setDepartment_id(departmentId);
-            dto.setCode(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
-            registrationRepo.save(RegistrationConverter.toEntity(dto));
-        }
-        return dto.getCode();
     }
 
     @Transactional

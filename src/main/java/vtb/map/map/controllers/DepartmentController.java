@@ -3,8 +3,11 @@ package vtb.map.map.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import vtb.map.map.dtos.DepartmentDto;
+import vtb.map.map.enums.Individual;
+import vtb.map.map.exceptions.TheSpecifiedDateIsNotPossibleException;
 import vtb.map.map.services.DepartmentService;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -43,5 +46,10 @@ public class DepartmentController {
     @GetMapping("/getWorkloadOfDepartment")
     public Map<Long, Integer> getWorkloadOfDepartment(long id) {
         return departmentService.getWorkload(id);
+    }
+
+    @GetMapping("/register")
+    public String saveRegistration(Individual type, Long departmentId, Timestamp time) throws TheSpecifiedDateIsNotPossibleException {
+        return departmentService.register(type, departmentId, time);
     }
 }
