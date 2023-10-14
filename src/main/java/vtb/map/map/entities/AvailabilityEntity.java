@@ -18,28 +18,22 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AvailabilityEntity extends BaseEntity{
-    @OneToOne
-    @JoinColumn(name = "wheelchair_entity_id")
-    private PartEntity wheelchairEntity;
-    @OneToOne
-    @JoinColumn(name = "blind_entity_id")
-    private PartEntity blindEntity;
-    @OneToOne
-    @JoinColumn(name = "nfc_for_bank_cards_entity_id")
-    private PartEntity nfc_for_bank_cardsEntity;
-    @OneToOne
-    @JoinColumn(name = "qr_read_entity_id")
-    private PartEntity qr_readEntity;
-    @OneToOne
-    @JoinColumn(name = "supports_usd_entity_id")
-    private PartEntity supports_usdEntity;
-    @OneToOne
-    @JoinColumn(name = "supports_charge_rub_entity_id")
-    private PartEntity supports_charge_rubEntity;
-    @OneToOne
-    @JoinColumn(name = "supports_eur_entity_id")
-    private PartEntity supports_eurEntity;
-    @OneToOne
-    @JoinColumn(name = "supports_rub_entity_id")
-    private PartEntity supports_rubEntity;
+    private Boolean wheelchair_cap;
+    private Boolean wheelchair_act;
+    private Boolean blind_cap;
+    private Boolean blind_act;
+    private Boolean nfc_for_bank_cards_cap;
+    private Boolean nfc_for_bank_cards_act;
+    private Boolean qr_read_cap;
+    private Boolean qr_read_act;
+    private Boolean supports_usd_cap;
+    private Boolean supports_usd_act;
+    private Boolean supports_charge_rub_cap;
+    private Boolean supports_charge_rub_act;
+    private Boolean supports_eur_cap;
+    private Boolean supports_eur_act;
+    private Boolean supports_rub_cap;
+    private Boolean supports_rub_act;
+    private Boolean rub_large_bills;
+    private Boolean rub_small_bills;
 }
