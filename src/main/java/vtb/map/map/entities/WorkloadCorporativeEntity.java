@@ -7,6 +7,7 @@ import lombok.Setter;
 import vtb.map.map.entities.base.BaseEntity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Table(name = "workloadcorporative")
 @Entity
@@ -18,6 +19,6 @@ public class WorkloadCorporativeEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "department_entity_id")
     private DepartmentEntity departmentEntity;
-    @Column(name = "people_count")
-    private Integer people_count;
+    @Column(name = "time")
+    private Timestamp time;
 }

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,5 +14,5 @@ import lombok.Setter;
 public class WorkloadCorporativeDto {
     private Long id;
     private Long department_id;
-    private Integer people_count;
+    private Timestamp time;
 }
