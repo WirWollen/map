@@ -15,4 +15,5 @@ public class WorkloadCorporativeDto {
     private Long id;
     private Long department_id;
     private Timestamp time;
+    private String name;
 }

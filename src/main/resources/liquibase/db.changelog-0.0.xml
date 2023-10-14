@@ -197,4 +197,10 @@
         </createTable>
         <addForeignKeyConstraint baseColumnNames="department_entity_id" baseTableName="registrationcorporative" constraintName="FK_REGISTRATIONCORPORATIVE_ON_DEPARTMENT_ENTITY" referencedColumnNames="id" referencedTableName="department"/>
     </changeSet>
+
+    <changeSet id="14_10_2023_3" author="wir_wollen">
+        <addColumn tableName="workloadcorporative">
+            <column name="name" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

@@ -21,4 +21,6 @@ public class WorkloadCorporativeEntity extends BaseEntity {
     private DepartmentEntity departmentEntity;
     @Column(name = "time")
     private Timestamp time;
+    @Column(name = "name")
+    private String name;
 }
