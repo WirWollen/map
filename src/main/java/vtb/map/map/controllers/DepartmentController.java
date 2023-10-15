@@ -53,7 +53,7 @@ public class DepartmentController {
         return departmentService.register(type, departmentId, time);
     }
 
-    @GetMapping("/test")
+    @GetMapping("/checkWorkloadOneInd")
     public Integer test(Long id) {
         return departmentService.calculateTimeInd(id);
     }

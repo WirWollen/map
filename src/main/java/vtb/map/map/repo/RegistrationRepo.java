@@ -63,6 +63,6 @@ public interface RegistrationRepo extends CrudRepository<RegistrationEntity, Lon
 
     @Query(value = "SELECT COUNT(*) FROM registration \n" +
             "JOIN department ON registration.department_entity_id = department.id \n" +
-            "WHERE datetime > ?1 AND datetime < ?2 AND locality_entity_id = ?3", nativeQuery = true)
+            "WHERE (datetime BETWEEN ?1 AND ?2) AND department_entity_id = ?3", nativeQuery = true)
     Integer calculateRegistration(LocalDateTime startTime, LocalDateTime endTime, Long localityId);
 }

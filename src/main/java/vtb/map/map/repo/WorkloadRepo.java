@@ -11,6 +11,6 @@ public interface WorkloadRepo extends CrudRepository<WorkloadEntity, Long> {
 
     @Query(value = "SELECT COUNT(*) FROM workload " +
             "JOIN department ON workload.department_entity_id = department.id " +
-            "WHERE time > ?1 AND time < ?2 AND active = true AND locality_entity_id = ?3", nativeQuery = true)
+            "WHERE time > ?1 AND time < ?2 AND active = true AND department_entity_id = ?3", nativeQuery = true)
     Integer calculateClients(LocalDateTime startTime, LocalDateTime endTime, Long localityId);
 }

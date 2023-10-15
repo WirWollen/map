@@ -16,9 +16,8 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegistrationEntity extends BaseEntity {
-    @ManyToOne
     @JoinColumn(name = "department_entity_id")
-    private DepartmentEntity departmentEntity;
+    private Long department_entity_id;
     @Column (name = "code")
     private String code;
     @Column(name = "datetime")
