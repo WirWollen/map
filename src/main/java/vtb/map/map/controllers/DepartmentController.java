@@ -54,7 +54,12 @@ public class DepartmentController {
     }
 
     @GetMapping("/checkWorkloadOneInd")
-    public Integer test(Long id) {
+    public Integer checkWorkloadOneInd(Long id) {
         return departmentService.calculateTimeInd(id);
+    }
+
+    @GetMapping("/checkWorkloadOneCorpo")
+    public Integer checkWorkloadOneCorpo(Long id) {
+        return departmentService.calculateTimeCorpo(id);
     }
 }

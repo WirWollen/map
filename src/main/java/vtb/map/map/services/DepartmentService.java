@@ -12,10 +12,7 @@ import vtb.map.map.dtos.RegistrationCorporativeDto;
 import vtb.map.map.dtos.RegistrationDto;
 import vtb.map.map.enums.Individual;
 import vtb.map.map.exceptions.TheSpecifiedDateIsNotPossibleException;
-import vtb.map.map.repo.DepartmentRepo;
-import vtb.map.map.repo.RegistrationCorporativeRepo;
-import vtb.map.map.repo.RegistrationRepo;
-import vtb.map.map.repo.WorkloadRepo;
+import vtb.map.map.repo.*;
 
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -40,6 +37,7 @@ public class DepartmentService {
     private RegistrationCorporativeRepo registrationCorporativeRepo;
     private final WorkloadService workloadService;
     private final WorkloadRepo workloadRepo;
+    private final WorkloadCorporativeRepo workloadCorporativeRepo;
 
     public List<DepartmentDto> showAllDepartments() {
         return departmentRepo.findAll().stream().map(DepartmentConverter::toDto).collect(Collectors.toList());
@@ -183,6 +181,13 @@ public class DepartmentService {
     public Integer calculateTimeInd(Long localityId) {
         Integer countClients = workloadRepo.calculateClients(LocalDateTime.now().minus(overwatchBefore, ChronoUnit.MINUTES), LocalDateTime.now().plus(overwatchAfter, ChronoUnit.MINUTES), localityId);
         Integer countElectro = registrationRepo.calculateRegistration(LocalDateTime.now().minus(overwatchBefore, ChronoUnit.MINUTES), LocalDateTime.now().plus(overwatchAfter, ChronoUnit.MINUTES), localityId);
+
+        return (countClients + countElectro) * registerTime / del;
+    }
+
+    public Integer calculateTimeCorpo(Long localityId) {
+        Integer countClients = workloadCorporativeRepo.calculateClients(LocalDateTime.now().minus(overwatchBefore, ChronoUnit.MINUTES), LocalDateTime.now().plus(overwatchAfter, ChronoUnit.MINUTES), localityId);
+        Integer countElectro = registrationCorporativeRepo.calculateRegistration(LocalDateTime.now().minus(overwatchBefore, ChronoUnit.MINUTES), LocalDateTime.now().plus(overwatchAfter, ChronoUnit.MINUTES), localityId);
 
         return (countClients + countElectro) * registerTime / del;
     }
